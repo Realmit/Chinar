@@ -56,8 +56,8 @@ class Mainpage : AppCompatActivity() {
                 }
                 // Thin phone
                 aspectratio > 2.30 -> {
-                    offset = position * pageWidth * (0.45f)
-                    scale = 1f - (0.35f * abs(position))
+                    offset = position * pageWidth * (0.25f)
+                    scale = 1f - (0.45f * abs(position))
                 }
                 // Normal phones
                 else -> {
