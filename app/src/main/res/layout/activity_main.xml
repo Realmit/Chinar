@@ -20,7 +20,6 @@
         android:id="@+id/viewPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotationX="20"
-        android:text="PRE-ALPHA v 0.0.2c"
+        android:text="КАФЕ ЧИНАР"
         android:textAlignment="center"
         android:textColor="@color/maincolorred"
         android:textColorLink="#FF0000"
@@ -39,25 +38,36 @@
     <Button
         android:id="@+id/buttonGoToMenu"
         android:layout_width="226dp"
-        android:layout_height="120dp"
+        android:layout_height="114dp"
         android:text="МЕНЮ" />
 
     <Button
         android:id="@+id/buttonGoToOrder"
         android:layout_width="226dp"
-        android:layout_height="120dp"
+        android:layout_height="114dp"
         android:text="ЗАКАЗАТЬ" />
 
     <Button
         android:id="@+id/buttonGoToReviews"
         android:layout_width="226dp"
-        android:layout_height="120dp"
+        android:layout_height="114dp"
         android:text="ОТЗЫВЫ" />
 
     <Button
         android:id="@+id/buttonGoToCafe"
         android:layout_width="226dp"
-        android:layout_height="120dp"
+        android:layout_height="114dp"
         android:text="КАФЕ" />
 
+    <TextView
+        android:id="@+id/textTitle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rotationX="-20"
+        android:text="VER 0.0.2d"
+        android:textAlignment="center"
+        android:textColor="@color/maincolorred"
+        android:textColorLink="#FF0000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 </LinearLayout>

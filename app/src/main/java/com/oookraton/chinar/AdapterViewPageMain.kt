@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class AdapterViewPageMain(private val context: Context, private val images: IntArray) :
     RecyclerView.Adapter<AdapterViewPageMain.ImageViewHolder>() {
-
+    private var toast: Toast? = null
     class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
     }
@@ -26,7 +26,10 @@ class AdapterViewPageMain(private val context: Context, private val images: IntA
         holder.imageView.setImageResource(images[position])
         // Set click listener
         holder.imageView.setOnClickListener {
-            Toast.makeText(context, "Image ${position + 1}", Toast.LENGTH_LONG).show()
+            toast?.cancel()
+            toast = null
+            toast = Toast.makeText(context, "Image ${position + 1}", Toast.LENGTH_LONG)
+            toast?.show()
         }
     }
 
