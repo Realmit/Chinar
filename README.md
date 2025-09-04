@@ -3,4 +3,5 @@
 - Ничего.
 
 Изображения работы программы:
+
 <img width="345" height="723" alt="image" src="https://github.com/user-attachments/assets/1903c135-92f2-4030-bf62-ae61114548e0" />
