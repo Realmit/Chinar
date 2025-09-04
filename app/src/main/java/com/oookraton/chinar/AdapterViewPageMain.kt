@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 
 class AdapterViewPageMain(private val context: Context, private val images: IntArray) :
@@ -23,7 +24,6 @@ class AdapterViewPageMain(private val context: Context, private val images: IntA
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         holder.imageView.setImageResource(images[position])
-
         // Set click listener
         holder.imageView.setOnClickListener {
             Toast.makeText(context, "Image ${position + 1}", Toast.LENGTH_LONG).show()

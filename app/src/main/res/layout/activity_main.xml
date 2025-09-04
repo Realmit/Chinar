@@ -18,15 +18,18 @@
         app:layout_constraintTop_toTopOf="parent" /> -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/textTitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotationX="20"
-        android:text="PRE-ALPHA v 0.0.2a"
+        android:text="PRE-ALPHA v 0.0.2b"
         android:textAlignment="center"
         android:textColor="@color/maincolorred"
         android:textColorLink="#FF0000"
