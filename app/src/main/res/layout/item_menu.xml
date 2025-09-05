@@ -14,17 +14,14 @@
         android:orientation="horizontal"
         android:padding="12dp"
         android:background="?android:attr/selectableItemBackground">
-
         <!-- Icon -->
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/itemIcon"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher_round"
-            android:scaleType="centerInside"
+            android:src="@mipmap/ic_launcher"
             android:layout_gravity="center_vertical"
             android:contentDescription="Item Icon" />
-
         <!-- Texts -->
         <LinearLayout
             android:layout_width="0dp"
