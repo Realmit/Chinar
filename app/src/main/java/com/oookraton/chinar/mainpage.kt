@@ -5,14 +5,11 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
 
 class Mainpage : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
-    private lateinit var cardView: CardView
     var images = intArrayOf(R.drawable.main_image1,R.drawable.main_image2,R.drawable.main_image3)
     var AdapterViewPageMain: AdapterViewPageMain? = null
 
