@@ -16,19 +16,19 @@ class Mainpage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
         // Count screen aspect ratio
         val aspectratio = resources.displayMetrics.heightPixels.toFloat()/resources.displayMetrics.widthPixels.toFloat()
 
         // ViewPager setup
-        viewPager2=findViewById<ViewPager2>(R.id.viewPager) as ViewPager2;
+        viewPager2=findViewById<ViewPager2>(R.id.viewPager) as ViewPager2
         AdapterViewPageMain = AdapterViewPageMain(this, images)
         viewPager2.adapter = AdapterViewPageMain
         viewPager2.offscreenPageLimit = 2
         // Automatically go to 2nd picture
         viewPager2.postDelayed({
             viewPager2.setCurrentItem(1, true)
-        }, 100)
+        }, 500)
 
         // Better animation
         viewPager2.setPageTransformer { page, position ->

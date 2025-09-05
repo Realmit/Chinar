@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.Chinar" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/maincolorred</item>
@@ -11,5 +10,12 @@
         <item name="colorOnSecondary">@color/background</item>
         <!-- Customization -->
         <item name="android:windowBackground">@color/background</item>
+    </style>
+    <style name="Widget.App.Chip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/maincolorred</item>
+        <item name="android:textColor">@color/background</item>
+        <item name="chipStartPadding">12dp</item>
+        <item name="chipEndPadding">12dp</item>
+        <item name="android:checkMark">@drawable/abc_btn_radio_material</item>
     </style>
 </resources>

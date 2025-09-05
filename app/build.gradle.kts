@@ -37,6 +37,8 @@ android {
 
 dependencies {
 
+    implementation("com.google.android.material:material:1.13.0")
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation("androidx.viewpager2:viewpager2:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")

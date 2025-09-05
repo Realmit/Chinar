@@ -6,25 +6,61 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Menu Page"
+        android:text="Меню"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="200dp" />
+        android:layout_marginTop="16dp" />
 
+    <!-- Categories Horizontal Scrollable List -->
+    <HorizontalScrollView
+        android:id="@+id/categoryScrollView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/textTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:id="@+id/categoryContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+            <!-- Categories will be added here dynamically -->
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <!-- RecyclerView for Menu Items -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/categoryScrollView"
+        app:layout_constraintBottom_toTopOf="@id/buttonBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Back Button -->
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
+        android:text="Назад"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="0dp"
         android:layout_marginStart="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
