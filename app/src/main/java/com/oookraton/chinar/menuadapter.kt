@@ -68,6 +68,7 @@ class MenuAdapter(private val context: Context, private var items: MutableList<M
         dialog.findViewById<TextView>(R.id.dialogProtein).text = item.protein.toString()
         dialog.findViewById<TextView>(R.id.dialogFat).text = item.fat.toString()
         dialog.findViewById<TextView>(R.id.dialogCarbs).text = item.carbs.toString()
+        dialog.findViewById<TextView>(R.id.dialogMass).text = item.mass.toString()
         // Close button
         dialog.findViewById<Button>(R.id.buttonClose).setOnClickListener {
             dialog.dismiss()
