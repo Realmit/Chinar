@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical"
-    android:padding="0dp">
+    android:orientation="vertical">
     <!--<ImageView
         android:id="@+id/imageView"
         android:layout_width="300dp"
@@ -22,12 +21,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textTitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
         android:rotationX="20"
         android:text="КАФЕ ЧИНАР"
         android:textAlignment="center"
@@ -35,40 +34,37 @@
         android:textColorLink="#FF0000"
         android:textSize="24sp"
         android:textStyle="bold" />
+
     <Button
         android:id="@+id/buttonGoToMenu"
         android:layout_width="226dp"
         android:layout_height="114dp"
         android:text="МЕНЮ"
-        app:cornerRadius = "20dp"
-        android:layout_marginBottom="5dp"/>
+        app:cornerRadius = "20dp" />
     <Button
         android:id="@+id/buttonGoToOrder"
         android:layout_width="226dp"
         android:layout_height="114dp"
         android:text="ЗАКАЗАТЬ"
-        app:cornerRadius = "20dp"
-        android:layout_marginBottom="5dp"/>
+        app:cornerRadius = "20dp"/>
     <Button
         android:id="@+id/buttonGoToReviews"
         android:layout_width="226dp"
         android:layout_height="114dp"
         android:text="ОТЗЫВЫ"
-        app:cornerRadius = "20dp"
-        android:layout_marginBottom="5dp"/>
+        app:cornerRadius ="20dp" />
     <Button
         android:id="@+id/buttonGoToCafe"
         android:layout_width="226dp"
         android:layout_height="114dp"
         android:text="КАФЕ"
-        app:cornerRadius = "20dp"
-        android:layout_marginBottom="5dp"/>
+        app:cornerRadius = "20dp" />
     <TextView
         android:id="@+id/textTitle3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotationX="-20"
-        android:text="VER 0.1.2a"
+        android:text="VER 0.2.0b"
         android:textAlignment="center"
         android:textColor="@color/maincolorred"
         android:textColorLink="#FF0000"

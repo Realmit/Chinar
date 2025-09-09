@@ -15,5 +15,10 @@ class Cafe_mainpage : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        val button3d = findViewById<Button>(R.id.button3dView)
+        button3d.setOnClickListener {
+            val intent = Intent(this, PanoramaActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
