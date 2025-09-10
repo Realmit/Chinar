@@ -17,30 +17,28 @@
   </style>
 </head>
 <body>
-<div id="loading">Loading 360° View...</div>
+<div id="loading">Loading...</div>
 
 <a-scene background="color: #000">
   <a-sky id="pano-sky" src="room1.jpg" rotation="0 0 0"></a-sky>
-
-  <a-camera position="0 1.6 0">
-  </a-camera>
+  <a-camera></a-camera>
 </a-scene>
 
 <script>
-  window.goToNextRoom = function() {
+  // Function called from Android
+  function changePanorama(imagePath) {
     const sky = document.getElementById('pano-sky');
-    const current = sky.getAttribute('src');
-    const next = current === 'room1.jpg' ? 'room2.jpg' : 'room1.jpg';
+    const loading = document.getElementById('loading');
 
-    document.getElementById('loading').style.display = 'block';
-    sky.setAttribute('src', next);
+    loading.style.display = 'block';
+    sky.setAttribute('src', imagePath);
 
-    sky.addEventListener('materialtextureloaded', function onLoaded() {
-      document.getElementById('loading').style.display = 'none';
-      sky.removeEventListener('materialtextureloaded', onLoaded);
+    sky.addEventListener('materialtextureloaded', () => {
+      loading.style.display = 'none';
     });
-  };
+  }
 
+  // Hide loading after first load
   document.getElementById('pano-sky').addEventListener('materialtextureloaded', () => {
     document.getElementById('loading').style.display = 'none';
   });
