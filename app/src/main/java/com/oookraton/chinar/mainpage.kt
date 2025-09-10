@@ -7,6 +7,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
+import android.widget.Toast
+import androidx.core.net.toUri
 
 class Mainpage : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
@@ -78,10 +80,30 @@ class Mainpage : AppCompatActivity() {
             val intent = Intent(this, Cafe_mainpage::class.java)
             startActivity(intent)
         }
-        val buttonreviews = findViewById<Button>(R.id.buttonGoToReviews)
-        buttonreviews.setOnClickListener {
-            val intent = Intent(this, Review_mainpage::class.java)
+        val button2gis = findViewById<Button>(R.id.buttonGoToReviews2gis)
+        button2gis.setOnClickListener {
+            val url = "https://go.2gis.com/XfrWt"
+            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
             startActivity(intent)
+            try {
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Браузер не найден!", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, "Не получилось открыть ссылку, ошибка: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
+        val buttonyamaps = findViewById<Button>(R.id.buttonGoToReviewsYandex)
+        buttonyamaps.setOnClickListener {
+            val url = "https://yandex.ru/maps/-/CLUK44IT"
+            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Браузер не найден!", Toast.LENGTH_SHORT).show()
+            }
         }
         val buttonorder = findViewById<Button>(R.id.buttonGoToOrder)
         buttonorder.setOnClickListener {

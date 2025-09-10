@@ -48,23 +48,44 @@
         android:text="ЗАКАЗАТЬ"
         app:cornerRadius = "20dp"/>
     <Button
-        android:id="@+id/buttonGoToReviews"
-        android:layout_width="226dp"
-        android:layout_height="114dp"
-        android:text="ОТЗЫВЫ"
-        app:cornerRadius ="20dp" />
-    <Button
         android:id="@+id/buttonGoToCafe"
         android:layout_width="226dp"
         android:layout_height="114dp"
         android:text="КАФЕ"
         app:cornerRadius = "20dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/buttonGoToReviews2gis"
+            android:layout_width="112dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="6dp"
+            android:drawableTop="@drawable/twogis"
+            android:drawablePadding="14dp"
+            android:paddingTop="14dp"
+            android:text="2GIS"
+            app:cornerRadius="20dp" />
+        <Button
+            android:id="@+id/buttonGoToReviewsYandex"
+            android:layout_width="110dp"
+            android:layout_height="114dp"
+            android:text="яндекс"
+            android:paddingTop="14dp"
+            android:drawableTop="@drawable/yamaps"
+            android:drawablePadding="14dp"
+            android:layout_marginEnd="6dp"
+            app:cornerRadius ="20dp" />
+    </LinearLayout>
     <TextView
         android:id="@+id/textTitle3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotationX="-20"
-        android:text="VER 0.2.1c"
+        android:text="VER 0.2.3"
         android:textAlignment="center"
         android:textColor="@color/maincolorred"
         android:textColorLink="#FF0000"
