@@ -88,8 +88,6 @@ class Mainpage : AppCompatActivity() {
             try {
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
-                } else {
-                    Toast.makeText(this, "Браузер не найден!", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Toast.makeText(this, "Не получилось открыть ссылку, ошибка: ${e.message}", Toast.LENGTH_LONG).show()
@@ -101,8 +99,6 @@ class Mainpage : AppCompatActivity() {
             val intent = Intent(Intent.ACTION_VIEW, url.toUri())
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
-            } else {
-                Toast.makeText(this, "Браузер не найден!", Toast.LENGTH_SHORT).show()
             }
         }
         val buttonorder = findViewById<Button>(R.id.buttonGoToOrder)

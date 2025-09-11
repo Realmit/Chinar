@@ -13,9 +13,22 @@ import android.widget.TextView
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
-
+data class MenuItem(
+    val title: String,
+    val description: String,
+    val price: String,
+    val iconRes: Int,
+    val fullDescription: String,
+    val category: String,
+    val calories: Double,
+    val protein: Double,
+    val fat: Double,
+    val carbs: Double,
+    val mass: Int
+)
 class MenuAdapter(private val context: Context, private var items: MutableList<MenuItem>) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
+
     fun updateItems(newItems: List<MenuItem>) {
         items.clear()
         items.addAll(newItems)
