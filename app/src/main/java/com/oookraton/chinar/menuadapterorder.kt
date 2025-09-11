@@ -4,13 +4,16 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-
+import android.widget.TextView
+private var isSelfUpdate = false
 
 class MenuAdapterOrder(
     private val context: Context,
@@ -26,8 +29,9 @@ class MenuAdapterOrder(
         val itemPrice: TextView = view.findViewById(R.id.itemPrice)
         val buttonMinus: Button = view.findViewById(R.id.buttonMinus)
         val buttonPlus: Button = view.findViewById(R.id.buttonPlus)
-        val textQuantity: TextView = view.findViewById(R.id.textQuantity)
+        val textQuantity: EditText = view.findViewById(R.id.textQuantity)
         val quantityGroup: LinearLayout = view.findViewById(R.id.quantityGroup)
+        val textSubtotal: TextView = view.findViewById(R.id.textSubtotal)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,8 +42,24 @@ class MenuAdapterOrder(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        fun updateSubtotal(item: MenuItem, quantity: Int) {
+            val priceValue = parsePrice(item.price)
+            val total = priceValue * quantity
+            holder.textSubtotal.text = "${formatPrice(total)}₽"
+            holder.textSubtotal.visibility = View.VISIBLE
+        }
         val item = items[position]
         val quantity = cart[item] ?: 0
+        val quantityInCart = cart[item] ?: 0
+        if (quantityInCart > 0) {
+            holder.textQuantity.setText(quantityInCart.toString())
+            holder.quantityGroup.visibility = View.VISIBLE
+            holder.textSubtotal.visibility = View.VISIBLE
+            updateSubtotal(item, quantityInCart)
+        } else {
+            holder.quantityGroup.visibility = View.GONE
+            holder.textSubtotal.visibility = View.GONE
+        }
         holder.itemTitle.text = item.title
         holder.itemDescription.text = item.description
         holder.itemPrice.text = item.price
@@ -48,7 +68,6 @@ class MenuAdapterOrder(
         holder.quantityGroup.visibility = View.GONE
 
         // Show minus button and group when + is pressed
-
         if (quantity > 0) {
             holder.quantityGroup.visibility = View.VISIBLE
             holder.textQuantity.setText(quantity.toString())
@@ -61,6 +80,7 @@ class MenuAdapterOrder(
             cart[item] = newQty
             holder.textQuantity.setText(newQty.toString())
             holder.quantityGroup.visibility = View.VISIBLE
+            updateSubtotal(item, newQty)
             onCartChanged()
         }
         // – Button
@@ -70,29 +90,75 @@ class MenuAdapterOrder(
                 val newQty = current - 1
                 cart[item] = newQty
                 holder.textQuantity.setText(newQty.toString())
+                updateSubtotal(item, newQty)
             } else {
                 cart.remove(item)
                 holder.quantityGroup.visibility = View.GONE
+                holder.textSubtotal.visibility = View.GONE
             }
             onCartChanged()
         }
-        // Allow user to tap and edit quantity directly
         holder.textQuantity.setOnClickListener {
             holder.textQuantity.isFocusableInTouchMode = true
         }
+        holder.textQuantity.addTextChangedListener(object: TextWatcher {
+            private var lastEmittedValue = cart[item] ?: 0
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Пустой или логировать
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isSelfUpdate) return
+
+                val input = s.toString().trim()
+                val newQty = if (input.isEmpty()) 0 else input.toIntOrNull() ?: 0
+                if (newQty != lastEmittedValue) {
+                    if (newQty <= 0) {
+                        return
+                    }
+                    cart[item] = newQty
+                    lastEmittedValue = newQty
+                    updateSubtotal(item, newQty)
+                    onCartChanged()
+                }
+            }
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString().trim()
+                val current = cart[item] ?: 0
+                if (input.isEmpty() && current > 0) {
+                    isSelfUpdate = true
+                    s?.append(current.toString())
+                    isSelfUpdate = false
+                } else {
+                    val newQty = input.toIntOrNull()
+                    if (newQty != null && newQty > 0) {
+                        holder.quantityGroup.visibility = View.VISIBLE
+                    } else if (current == 0) {
+                        holder.quantityGroup.visibility = View.GONE
+                    }
+                }
+            }
+        })
         holder.textQuantity.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                val input = holder.textQuantity.text.toString()
-                val newQty = if (input.isEmpty()) 1 else input.toIntOrNull() ?: 1
-                val clampedQty = if (newQty < 1) 1 else newQty  // Ensure positive
-                if (clampedQty == 1) {
-                    cart[item] = 1
-                } else {
-                    cart[item] = clampedQty
+                val input = holder.textQuantity.text.toString().trim()
+                val current = cart[item] ?: 0
+                val newQty = input.toIntOrNull()
+
+                when {
+                    newQty == null || newQty < 1 -> {
+                        // Invalid input → reset
+                        isSelfUpdate = true
+                        holder.textQuantity.setText(current.toString())
+                        isSelfUpdate = false
+                    }
+                    newQty != current -> {
+                        cart[item] = newQty
+                        onCartChanged()
+                    }
                 }
-                holder.textQuantity.setText(clampedQty.toString())
-                holder.quantityGroup.visibility = View.VISIBLE
                 holder.textQuantity.isFocusableInTouchMode = false
+            } else {
+                holder.textQuantity.selectAll()
             }
         }
 
@@ -130,6 +196,12 @@ class MenuAdapterOrder(
         items.clear()
         items.addAll(newItems)
         notifyDataSetChanged()
+    }
+    private fun parsePrice(price: String): Double {
+        return price.filter { it.isDigit() || it == '.' }.toDoubleOrNull() ?: 0.0
+    }
+    private fun formatPrice(value: Double): String {
+        return if (value % 1 == 0.0) value.toInt().toString() else String.format("%.2f", value)
     }
 
     override fun getItemCount() = items.size

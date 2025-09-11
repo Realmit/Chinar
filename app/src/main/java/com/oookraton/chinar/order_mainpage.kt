@@ -80,12 +80,20 @@ class Order_mainpage : AppCompatActivity() {
                 .sortedBy { it.title.lowercase() }
         }
     }
+    private fun getSuffix(n: Int): String {
+        val lastDigit = n % 10
+        return when (lastDigit) {
+            1 -> "ия"
+            2, 3, 4 -> "ии"
+            else -> "ий"
+        }
+    }
     private fun updateCartTotal() {
         val itemCount = cart.values.sum()
         val totalPrice = cart.entries.sumOf { (item, quantity) ->
             parsePrice(item.price) * quantity
         }
-        textCartTotal.text = "$itemCount item${if (itemCount != 1) "s" else ""} • ${formatPrice(totalPrice)}₽"
+        textCartTotal.text = "$itemCount позиц${getSuffix(itemCount)} • ${formatPrice(totalPrice)}₽"
     }
     private fun parsePrice(price: String): Double {
         return price.filter { it.isDigit() || it == '.' }.toDoubleOrNull() ?: 0.0

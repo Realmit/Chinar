@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center_vertical">
-            <!-- Price & Button Group -->
+            <!-- Price & Button Group (Vertical) -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,6 +63,11 @@
                 android:layout_gravity="center_vertical">
 
                 <!-- Price above + button -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
                 <TextView
                     android:id="@+id/itemPrice"
                     android:layout_width="wrap_content"
@@ -72,14 +77,25 @@
                     android:textStyle="bold"
                     android:textColor="#000000"
                     android:paddingBottom="2dp" />
-
-                <!-- Outer container: always shows "+" -->
+                <!-- Subtotal: price * quantity -->
+                <TextView
+                    android:id="@+id/textSubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="52.99₽"
+                    android:textSize="12sp"
+                    android:textColor="#388E3C"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:layout_marginStart="4dp"/>
+                </LinearLayout>
+                <!-- Buttons: Minus, Quantity, Plus -->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!-- This group hides only when quantity = 0 -->
+                    <!-- Quantity Group (Minus + Editable Quantity) -->
                     <LinearLayout
                         android:id="@+id/quantityGroup"
                         android:layout_width="wrap_content"
@@ -97,6 +113,7 @@
                             android:backgroundTint="#D32F2F"
                             android:textSize="18sp"
                             android:padding="0dp" />
+
                         <EditText
                             android:id="@+id/textQuantity"
                             android:layout_width="40dp"
@@ -112,7 +129,7 @@
                             android:focusableInTouchMode="true" />
                     </LinearLayout>
 
-                    <!-- Always visible "+" button -->
+                    <!-- Green + Button -->
                     <Button
                         android:id="@+id/buttonPlus"
                         android:layout_width="36dp"

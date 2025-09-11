@@ -62,9 +62,11 @@
             android:id="@+id/textCartTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0 items • 0₽"
-            android:textSize="14sp"
-            android:textColor="#000000"
+            android:text="0 позиций • 0₽"
+            android:textColor="@color/maincolorred"
+            android:textColorLink="#FF0000"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:gravity="end" />
     </LinearLayout>
 

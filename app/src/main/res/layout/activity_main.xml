@@ -51,7 +51,7 @@
         android:id="@+id/buttonGoToCafe"
         android:layout_width="226dp"
         android:layout_height="114dp"
-        android:text="КАФЕ"
+        android:text="О КАФЕ"
         app:cornerRadius = "20dp" />
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotationX="-20"
-        android:text="VER 0.3.2"
+        android:text="VER 0.3.4"
         android:textAlignment="center"
         android:textColor="@color/maincolorred"
         android:textColorLink="#FF0000"
