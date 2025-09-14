@@ -3,9 +3,11 @@ package com.oookraton.chinar
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
 import android.text.style.ForegroundColorSpan
 import android.text.style.StrikethroughSpan
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -13,6 +15,7 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import java.util.*
+import android.text.TextWatcher
 
 class DatePickerActivity : AppCompatActivity() {
     private var toast: Toast? = null
@@ -22,6 +25,7 @@ class DatePickerActivity : AppCompatActivity() {
         val calendarView = findViewById<MaterialCalendarView>(R.id.calendarView)
         val buttonBack = findViewById<Button>(R.id.buttonBack)
         val buttonNext = findViewById<Button>(R.id.buttonNext)
+        val editNumberOfPeople = findViewById<EditText>(R.id.editNumberOfPeople)
         // Set min and max dates
         val minCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2024, 1, 1)
         val maxCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2025, 12, 31)
@@ -87,13 +91,27 @@ class DatePickerActivity : AppCompatActivity() {
                 toast?.show()
             }
         }
-
+        editNumberOfPeople.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val input = s.toString().trim()
+                if (input.isNotEmpty()) {
+                    val num = input.toIntOrNull()
+                    if (num != null && (num < 10 || num > 100)) {
+                        editNumberOfPeople.error = "От 10 до 100 человек"
+                    }
+                }
+            }
+        })
         buttonBack.setOnClickListener {
             val intent = Intent(this, Order_mainpage::class.java)
             startActivity(intent)
             finish()
         }
         buttonNext.setOnClickListener {
+            toast?.cancel()
+            toast = null
             if (selectedDate != null) {
                 val year = selectedDate!!.year
                 val month = selectedDate!!.month + 1
