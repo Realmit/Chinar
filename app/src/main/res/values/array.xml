@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="week_days_short">
-        <item>Вс</item> <!-- Sunday -->
         <item>Пн</item> <!-- Monday -->
         <item>Вт</item> <!-- Tuesday -->
         <item>Ср</item> <!-- Wednesday -->
         <item>Чт</item> <!-- Thursday -->
         <item>Пт</item> <!-- Friday -->
-        <item>Сб</item> <!-- Saturday -->
+        <item>Сб</item><!-- Saturday -->
+        <item>Вс</item><!-- Sunday -->
     </string-array>
 </resources>

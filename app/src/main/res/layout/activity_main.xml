@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:rotationX="-20"
-        android:text="VER 0.3.5a"
+        android:text="VER 0.3.5b"
         android:textAlignment="center"
         android:textColor="@color/maincolorred"
         android:textColorLink="#FF0000"

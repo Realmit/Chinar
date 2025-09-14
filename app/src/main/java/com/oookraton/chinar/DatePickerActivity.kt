@@ -12,19 +12,16 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
-import org.threeten.bp.LocalDate
-import java.lang.reflect.Array.set
 import java.util.*
 
 class DatePickerActivity : AppCompatActivity() {
-
+    private var toast: Toast? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_datepicker)
-
         val calendarView = findViewById<MaterialCalendarView>(R.id.calendarView)
         val buttonBack = findViewById<Button>(R.id.buttonBack)
-
+        val buttonNext = findViewById<Button>(R.id.buttonNext)
         // Set min and max dates
         val minCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2024, 1, 1)
         val maxCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2025, 12, 31)
@@ -36,32 +33,33 @@ class DatePickerActivity : AppCompatActivity() {
             .setMaximumDate(maxDate)
             .commit()
 
-        // Disable weekends (example)
+        // Disable weekends (sun)
         calendarView.addDecorator(object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay): Boolean {
                 val calendar = Calendar.getInstance().apply {
                     set(day.year, day.month, day.day)
                 }
                 val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-                return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+                return dayOfWeek == 3
             }
 
             override fun decorate(view: DayViewFacade) {
                 view.setDaysDisabled(true)
-                view.addSpan(StrikethroughSpan()) // Optional: line through
+                view.addSpan(StrikethroughSpan())
                 view.addSpan(ForegroundColorSpan(Color.GRAY))
             }
         })
 
         // Disable specific dates (e.g., holidays)
         val disabledDates = mutableSetOf<CalendarDay>()
-        disabledDates.add(CalendarDay.from(2025, 1, 1))  // New Year
+        disabledDates.add(CalendarDay.from(2025, 12, 31))  // New Year
         disabledDates.add(CalendarDay.from(2025, 2, 23)) // Defender of Fatherland Day
 
         calendarView.addDecorator(object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay) = day in disabledDates
             override fun decorate(view: DayViewFacade) {
                 view.setDaysDisabled(true)
+                view.addSpan(StrikethroughSpan())
                 view.addSpan(ForegroundColorSpan(Color.GRAY))
             }
         })
@@ -74,27 +72,36 @@ class DatePickerActivity : AppCompatActivity() {
                 set(date.year, date.month, date.day)
             }
             val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
-            val isWeekend = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+            val isWeekend = dayOfWeek == 3
 
             if (date !in disabledDates && !isWeekend && date.isInRange(minDate, maxDate)) {
                 selectedDate = date
-                Toast.makeText(this, "Дата выбрана: ${date.day}.${date.month + 1}.${date.year}", Toast.LENGTH_SHORT).show()
+                toast?.cancel()
+                toast = null
+                toast = Toast.makeText(this, "Дата выбрана: ${date.day}.${date.month + 1}.${date.year}", Toast.LENGTH_SHORT)
+                toast?.show()
             } else {
-                Toast.makeText(this, "Дата недоступна", Toast.LENGTH_SHORT).show()
+                toast?.cancel()
+                toast = null
+                toast = Toast.makeText(this, "Дата недоступна", Toast.LENGTH_SHORT)
+                toast?.show()
             }
         }
 
         buttonBack.setOnClickListener {
+            val intent = Intent(this, Order_mainpage::class.java)
+            startActivity(intent)
+            finish()
+        }
+        buttonNext.setOnClickListener {
             if (selectedDate != null) {
                 val year = selectedDate!!.year
                 val month = selectedDate!!.month + 1
                 val day = selectedDate!!.day
                 // Pass this date to another screen or save it
-                Toast.makeText(this, "Выбрано: $day.$month.$year", Toast.LENGTH_LONG).show()
+                toast = Toast.makeText(this, "Выбрано: $day.$month.$year", Toast.LENGTH_SHORT)
+                toast?.show()
             }
-            val intent = Intent(this, Order_mainpage::class.java)
-            startActivity(intent)
-            finish()
         }
     }
 
