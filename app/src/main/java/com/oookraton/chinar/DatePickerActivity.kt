@@ -1,6 +1,10 @@
 package com.oookraton.chinar
 
+import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.style.ForegroundColorSpan
+import android.text.style.StrikethroughSpan
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,8 +12,8 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
-import java.time.DayOfWeek
-import java.time.ZoneId
+import org.threeten.bp.LocalDate
+import java.lang.reflect.Array.set
 import java.util.*
 
 class DatePickerActivity : AppCompatActivity() {
@@ -22,30 +26,30 @@ class DatePickerActivity : AppCompatActivity() {
         val buttonBack = findViewById<Button>(R.id.buttonBack)
 
         // Set min and max dates
-        val minCalendar = Calendar.getInstance().apply {
-            set(2024, Calendar.JANUARY, 1)
-        }
-        val maxCalendar = Calendar.getInstance().apply {
-            set(2025, Calendar.DECEMBER, 31)
-        }
-        val minDate = minCalendar.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        val minCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2024, 1, 1)
+        val maxCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2025, 12, 31)
+        val minDate = CalendarDay.from(minCalendar)
+        val maxDate = CalendarDay.from(maxCalendar)
 
         calendarView.state().edit()
-            .setMinimumDate(CalendarDay.from(minDate))
-            .setMaximumDate(CalendarDay.from(maxDate))
+            .setMinimumDate(minDate)
+            .setMaximumDate(maxDate)
             .commit()
 
         // Disable weekends (example)
         calendarView.addDecorator(object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay): Boolean {
-                val weekDay = day.date.dayOfWeek
-                return weekDay == DayOfWeek.SATURDAY || weekDay == DayOfWeek.SUNDAY
+                val calendar = Calendar.getInstance().apply {
+                    set(day.year, day.month, day.day)
+                }
+                val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+                return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
             }
 
             override fun decorate(view: DayViewFacade) {
-                view.isDisabled = true
+                view.setDaysDisabled(true)
                 view.addSpan(StrikethroughSpan()) // Optional: line through
-                view.setTextAppearance(R.style.DisabledText)
+                view.addSpan(ForegroundColorSpan(Color.GRAY))
             }
         })
 
@@ -57,9 +61,8 @@ class DatePickerActivity : AppCompatActivity() {
         calendarView.addDecorator(object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay) = day in disabledDates
             override fun decorate(view: DayViewFacade) {
-                view.isDisabled = true
+                view.setDaysDisabled(true)
                 view.addSpan(ForegroundColorSpan(Color.GRAY))
-                view.setTextAppearance(R.style.DisabledText)
             }
         })
 
@@ -67,9 +70,15 @@ class DatePickerActivity : AppCompatActivity() {
         var selectedDate: CalendarDay? = null
 
         calendarView.setOnDateChangedListener { _, date, _ ->
-            if (date !in disabledDates && date.isInRange(minDate.time, maxDate.time)) {
+            val calendar = Calendar.getInstance().apply {
+                set(date.year, date.month, date.day)
+            }
+            val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+            val isWeekend = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY
+
+            if (date !in disabledDates && !isWeekend && date.isInRange(minDate, maxDate)) {
                 selectedDate = date
-                // Optionally highlight or show toast
+                Toast.makeText(this, "Дата выбрана: ${date.day}.${date.month + 1}.${date.year}", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Дата недоступна", Toast.LENGTH_SHORT).show()
             }
@@ -83,11 +92,24 @@ class DatePickerActivity : AppCompatActivity() {
                 // Pass this date to another screen or save it
                 Toast.makeText(this, "Выбрано: $day.$month.$year", Toast.LENGTH_LONG).show()
             }
+            val intent = Intent(this, Order_mainpage::class.java)
+            startActivity(intent)
             finish()
         }
     }
 
-    private fun Date.isInRange(start: Date, end: Date): Boolean {
-        return this >= start && this <= end
+    private fun CalendarDay.isInRange(start: CalendarDay, end: CalendarDay): Boolean {
+        val thisCalendar = Calendar.getInstance().apply {
+            set(this@isInRange.year, this@isInRange.month, this@isInRange.day)
+        }
+        val startCalendar = Calendar.getInstance().apply {
+            set(start.year, start.month, start.day)
+        }
+        val endCalendar = Calendar.getInstance().apply {
+            set(end.year, end.month, end.day)
+        }
+
+        return thisCalendar.timeInMillis >= startCalendar.timeInMillis &&
+                thisCalendar.timeInMillis <= endCalendar.timeInMillis
     }
 }

@@ -26,9 +26,7 @@
         app:layout_constraintBottom_toTopOf="@id/buttonBack"
         app:mcv_showOtherDates="all"
         app:mcv_selectionColor="#388E3C"
-        app:mcv_weekDayLabels="@array/week_days_short"
-        app:mcv_leftArrowMask="@drawable/ic_arrow_left"
-        app:mcv_rightArrowMask="@drawable/ic_arrow_right" />
+        app:mcv_weekDayLabels="@array/week_days_short" />
 
     <!-- Back Button -->
     <Button

@@ -39,7 +39,7 @@ class Order_mainpage : AppCompatActivity() {
         }
         val forwardButton = findViewById<Button>(R.id.buttonNext)
         forwardButton.setOnClickListener {
-            val intent = Intent(this, Mainpage::class.java)
+            val intent = Intent(this, DatePickerActivity::class.java)
             startActivity(intent)
             finish()
         }
