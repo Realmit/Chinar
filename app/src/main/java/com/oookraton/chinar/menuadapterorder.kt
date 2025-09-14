@@ -91,7 +91,7 @@ class MenuAdapterOrder(
         dialog.findViewById<TextView>(R.id.dialogDescription).text = item.fullDescription
         dialog.findViewById<TextView>(R.id.dialogPrice).text = item.price
         dialog.findViewById<ImageView>(R.id.dialogImage).setImageResource(item.iconRes)
-
+        dialog.findViewById<TextView>(R.id.dialogMass).text = item.mass.toString()
         dialog.findViewById<TextView>(R.id.dialogCalories).text = item.calories.toString()
         dialog.findViewById<TextView>(R.id.dialogProtein).text = item.protein.toString()
         dialog.findViewById<TextView>(R.id.dialogFat).text = item.fat.toString()

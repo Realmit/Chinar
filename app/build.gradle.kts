@@ -12,7 +12,7 @@ android {
         minSdk = 28
         targetSdk = 36
         versionCode = 1
-        versionName = "0.3.2"
+        versionName = "0.3.4b"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.car.ui.lib)
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -53,4 +54,5 @@ dependencies {
     implementation("androidx.webkit:webkit:1.14.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("org.nanohttpd:nanohttpd:2.2.0")
+    implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
 }

@@ -18,4 +18,8 @@
         <item name="chipEndPadding">12dp</item>
         <item name="android:checkMark">@drawable/abc_btn_radio_material</item>
     </style>
+    <style name="DisabledText">
+        <item name="android:textColor">#AAAAAA</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

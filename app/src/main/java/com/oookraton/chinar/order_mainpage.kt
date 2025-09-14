@@ -37,6 +37,12 @@ class Order_mainpage : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        val forwardButton = findViewById<Button>(R.id.buttonNext)
+        forwardButton.setOnClickListener {
+            val intent = Intent(this, Mainpage::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
     private fun setupCategories() {
         for (category in categories) {
@@ -82,11 +88,13 @@ class Order_mainpage : AppCompatActivity() {
     }
     private fun getSuffix(n: Int): String {
         val lastDigit = n % 10
-        return when (lastDigit) {
-            1 -> "ия"
-            2, 3, 4 -> "ии"
-            else -> "ий"
-        }
+        return if(n >= 11 && n <= 14) "ий"
+            else
+                when (lastDigit) {
+                    1 -> "ия"
+                    2, 3, 4 -> "ии"
+                    else -> "ий"
+                }
     }
     private fun updateCartTotal() {
         val itemCount = cart.values.sum()
