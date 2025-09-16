@@ -59,7 +59,9 @@ class Menu_mainpage : AppCompatActivity() {
 
     private fun filterItemsByCategory(): List<MenuItem> {
         return if (currentCategory == "Всё") {
-            menuItems.sortedWith { item1, item2 ->
+            menuItems
+                .filter { it.availability }
+                .sortedWith { item1, item2 ->
                 val index1 = categories.indexOf(item1.category)
                 val index2 = categories.indexOf(item2.category)
                 val finalIndex1 = if (index1 == -1) Int.MAX_VALUE else index1
@@ -72,7 +74,7 @@ class Menu_mainpage : AppCompatActivity() {
         } else {
             // Show only items in the selected category, sorted by title
             menuItems
-                .filter { it.category == currentCategory }
+                .filter { it.category == currentCategory && it.availability }
                 .sortedBy { it.title.lowercase() }
         }
     }

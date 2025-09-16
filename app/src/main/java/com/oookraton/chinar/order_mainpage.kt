@@ -72,7 +72,9 @@ class Order_mainpage : AppCompatActivity() {
 
     private fun filterItemsByCategory(): List<MenuItem> {
         return if (currentCategory == "Всё") {
-            MenuData.menuItems.sortedWith { item1, item2 ->
+            MenuData.menuItems
+                .filter { it.availability }
+                .sortedWith { item1, item2 ->
                 val idx1 = categories.indexOf(item1.category).let { if (it == -1) Int.MAX_VALUE else it }
                 val idx2 = categories.indexOf(item2.category).let { if (it == -1) Int.MAX_VALUE else it }
                 when (val diff = idx1.compareTo(idx2)) {
@@ -82,7 +84,7 @@ class Order_mainpage : AppCompatActivity() {
             }
         } else {
             MenuData.menuItems
-                .filter { it.category == currentCategory }
+                .filter { it.category == currentCategory && it.availability }
                 .sortedBy { it.title.lowercase() }
         }
     }

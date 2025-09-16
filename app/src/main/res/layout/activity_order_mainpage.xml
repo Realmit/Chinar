@@ -43,8 +43,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:gravity="center_vertical"
+        android:gravity="bottom"
+        android:layout_marginBottom="6dp"
         app:layout_constraintBottom_toBottomOf="parent">
         <!-- Back Button -->
         <Button
@@ -63,8 +63,7 @@
             android:orientation="vertical"
             android:gravity="end"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_marginBottom="13dp">
+            android:paddingEnd="16dp">
             <!-- Total Summary -->
             <TextView
                 android:id="@+id/textCartTotal"
@@ -75,7 +74,8 @@
                 android:textColorLink="#FF0000"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:gravity="end" />
+                android:gravity="end"
+                android:layout_marginTop="2dp"/>
             <Button
                 android:id="@+id/buttonNext"
                 android:layout_width="wrap_content"

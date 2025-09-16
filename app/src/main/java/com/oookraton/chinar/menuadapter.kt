@@ -24,7 +24,8 @@ data class MenuItem(
     val protein: Double,
     val fat: Double,
     val carbs: Double,
-    val mass: Int
+    val mass: Int,
+    val availability: Boolean
 )
 class MenuAdapter(private val context: Context, private var items: MutableList<MenuItem>) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
