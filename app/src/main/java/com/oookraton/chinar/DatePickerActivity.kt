@@ -16,9 +16,23 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import java.util.*
 import android.text.TextWatcher
+import android.util.TypedValue
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import android.widget.AdapterView
+import android.widget.LinearLayout
 
 class DatePickerActivity : AppCompatActivity() {
     private var toast: Toast? = null
+    private lateinit var eventTypeLayout: LinearLayout
+    private lateinit var peopleInputLayout: LinearLayout
+    private lateinit var spinnerEventType: Spinner
+    private lateinit var inputOtherLayout: TextInputLayout
+    private lateinit var editOtherEvent: TextInputEditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_datepicker)
@@ -26,6 +40,51 @@ class DatePickerActivity : AppCompatActivity() {
         val buttonBack = findViewById<Button>(R.id.buttonBack)
         val buttonNext = findViewById<Button>(R.id.buttonNext)
         val editNumberOfPeople = findViewById<EditText>(R.id.editNumberOfPeople)
+        spinnerEventType = findViewById(R.id.spinnerEventType)
+        inputOtherLayout = findViewById(R.id.inputOtherLayout)
+        editOtherEvent = findViewById(R.id.editOtherEvent)
+        eventTypeLayout = findViewById(R.id.eventTypeLayout)
+        peopleInputLayout = findViewById(R.id.peopleInputLayout)
+        // Setup dropdown
+        val eventTypes = arrayOf("Поминальные", "Свадьба", "День рождения", "Иное")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, eventTypes).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        spinnerEventType.adapter = adapter
+
+        // Handle selection
+        spinnerEventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 3) { // "Иное"
+                    inputOtherLayout.visibility = View.VISIBLE
+                    setMarginBottom(eventTypeLayout, 80f)
+                } else {
+                    inputOtherLayout.visibility = View.GONE
+                    editOtherEvent.setText("") // Clear when hidden
+                    setMarginBottom(eventTypeLayout, 10f)
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                inputOtherLayout.visibility = View.GONE
+                editOtherEvent.setText("")
+                setMarginBottom(eventTypeLayout, 10f)
+            }
+        }
+
+        // Limit input to 20 chars (reinforce maxLength)
+        editOtherEvent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.length ?: 0 > 20) {
+                    s?.let {
+                        it.replace(20, it.length, "")
+                    }
+                }
+            }
+        })
         // Set min and max dates
         val minCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2024, 1, 1)
         val maxCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2025, 12, 31)
@@ -84,11 +143,15 @@ class DatePickerActivity : AppCompatActivity() {
                 toast = null
                 toast = Toast.makeText(this, "Дата выбрана: ${date.day}.${date.month + 1}.${date.year}", Toast.LENGTH_SHORT)
                 toast?.show()
+                peopleInputLayout.visibility = View.VISIBLE
+                eventTypeLayout.visibility = View.VISIBLE
             } else {
                 toast?.cancel()
                 toast = null
                 toast = Toast.makeText(this, "Дата недоступна", Toast.LENGTH_SHORT)
                 toast?.show()
+                peopleInputLayout.visibility = View.GONE
+                eventTypeLayout.visibility = View.GONE
             }
         }
         editNumberOfPeople.addTextChangedListener(object : TextWatcher {
@@ -121,6 +184,7 @@ class DatePickerActivity : AppCompatActivity() {
                 toast?.show()
             }
         }
+
     }
 
     private fun CalendarDay.isInRange(start: CalendarDay, end: CalendarDay): Boolean {
@@ -136,5 +200,11 @@ class DatePickerActivity : AppCompatActivity() {
 
         return thisCalendar.timeInMillis >= startCalendar.timeInMillis &&
                 thisCalendar.timeInMillis <= endCalendar.timeInMillis
+    }
+    private fun setMarginBottom(view: View, dp: Float) {
+        val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, resources.displayMetrics)
+        val params = view.layoutParams as ViewGroup.MarginLayoutParams
+        params.bottomMargin = px.toInt()
+        view.layoutParams = params
     }
 }
