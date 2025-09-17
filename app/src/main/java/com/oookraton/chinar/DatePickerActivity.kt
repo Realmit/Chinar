@@ -87,13 +87,13 @@ class DatePickerActivity : AppCompatActivity() {
                 } else {
                     inputOtherLayout.visibility = View.GONE
                     editOtherEvent.setText("") // Clear when hidden
-                    setMarginBottom(eventTypeLayout, 10f)
+                    setMarginBottom(eventTypeLayout, 12f)
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 inputOtherLayout.visibility = View.GONE
                 editOtherEvent.setText("")
-                setMarginBottom(eventTypeLayout, 10f)
+                setMarginBottom(eventTypeLayout, 12f)
             }
         }
         // Limit input to 20 chars (reinforce maxLength) to other event input
@@ -114,17 +114,17 @@ class DatePickerActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position == 3) { // "Иное"
                     inputDecorLayout.visibility = View.VISIBLE
-                    setMarginBottom(decorTypeLayout, 80f)
+                    setMarginBottom(decorTypeLayout, 60f)
                 } else {
                     inputDecorLayout.visibility = View.GONE
                     editOtherDecor.setText("") // Clear when hidden
-                    setMarginBottom(decorTypeLayout, 10f)
+                    setMarginBottom(decorTypeLayout, 4f)
                 }
             }
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 inputOtherLayout.visibility = View.GONE
                 editOtherDecor.setText("")
-                setMarginBottom(decorTypeLayout, 10f)
+                setMarginBottom(decorTypeLayout, 4f)
             }
         }
         // Limit decors input to 20 chars (reinforce maxLength) to decor input

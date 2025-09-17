@@ -32,9 +32,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="4dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/calendarView"
         app:layout_constraintBottom_toTopOf="@id/eventTypeLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -52,7 +51,6 @@
             android:ems="3"
             android:gravity="center"
             android:text="10"
-            android:padding="8dp"
             android:textColorHint="#5a0200"/>
     </LinearLayout>
     <!-- Event Type Dropdown (hidden by default, unlocks when date picked) -->
@@ -61,7 +59,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="12dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/decorTypeLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,8 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Мероприятие:"
-            android:textSize="20sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="20sp" />
         <Spinner
             android:id="@+id/spinnerEventType"
             android:layout_width="match_parent"
@@ -108,6 +105,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="gone"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@id/decorCheckboxLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -115,8 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Скатерти:"
-            android:textSize="20sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="20sp" />
         <Spinner
             android:id="@+id/spinnerDecorType"
             android:layout_width="match_parent"
@@ -151,23 +148,46 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="visible"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/inputDecorLayout"
         app:layout_constraintBottom_toTopOf="@id/buttonLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-        <CheckBox
-            android:id="@+id/checkPhotobooth"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Фотобудка"
-            android:layout_marginStart="6dp"/>
-        <CheckBox
-            android:id="@+id/checkPhotozone"
-            android:layout_width="match_parent"
+            android:orientation="vertical">
+            <CheckBox
+                android:id="@+id/checkPhotobooth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Фотобудка" />
+            <CheckBox
+                android:id="@+id/checkPhotozone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Фотозона" />
+        </LinearLayout>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Фотобудка"
-            android:layout_marginStart="6dp"
-            />
+            android:orientation="vertical"
+            android:layout_marginEnd="28dp">
+            <CheckBox
+                android:id="@+id/checkBallons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Воздушные шары" />
+            <CheckBox
+                android:id="@+id/checkMinions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Миньоны" />
+        </LinearLayout>
     </LinearLayout>
     <!-- Back Button -->
     <LinearLayout
