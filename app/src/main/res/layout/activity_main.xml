@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
@@ -51,18 +51,31 @@
         android:gravity="center">
         <Button
             android:id="@+id/buttonGoToReviews2gis"
-            android:layout_width="112dp"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="114dp"
             android:layout_marginEnd="6dp"
             android:drawableTop="@drawable/twogis"
             android:drawablePadding="14dp"
             android:paddingTop="14dp"
             android:text="@string/gis"
             app:cornerRadius="20dp"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"
+            android:textSize="13sp"/>
+        <Button
+            android:id="@+id/buttonGoToWhatsapp"
+            android:layout_width="100dp"
+            android:layout_height="114dp"
+            android:layout_marginEnd="6dp"
+            android:drawableTop="@drawable/whatsapp"
+            android:drawablePadding="14dp"
+            android:paddingTop="14dp"
+            android:text="@string/whatsapp"
+            app:cornerRadius="20dp"
+            tools:ignore="ButtonStyle"
+            android:textSize="11sp"/>
         <Button
             android:id="@+id/buttonGoToReviewsYandex"
-            android:layout_width="110dp"
+            android:layout_width="100dp"
             android:layout_height="114dp"
             android:text="@string/yandex"
             android:paddingTop="14dp"
@@ -70,7 +83,8 @@
             android:drawablePadding="14dp"
             android:layout_marginEnd="6dp"
             app:cornerRadius ="20dp"
-            tools:ignore="ButtonStyle" />
+            tools:ignore="ButtonStyle"
+            android:textSize="13sp"/>
     </LinearLayout>
     <TextView
         android:id="@+id/textTitle3"

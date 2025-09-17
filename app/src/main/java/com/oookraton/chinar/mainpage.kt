@@ -101,6 +101,19 @@ class Mainpage : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+        val buttonwhatsapp = findViewById<Button>(R.id.buttonGoToWhatsapp)
+        buttonwhatsapp.setOnClickListener {
+            val url = "https://api.whatsapp.com/send?phone=79132180307"
+            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+            startActivity(intent)
+            try {
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, "Не получилось открыть ссылку, ошибка: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
         val buttonorder = findViewById<Button>(R.id.buttonGoToOrder)
         buttonorder.setOnClickListener {
             val intent = Intent(this, Order_mainpage::class.java)
