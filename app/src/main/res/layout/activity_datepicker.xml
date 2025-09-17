@@ -107,9 +107,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/buttonLayout"
+        app:layout_constraintBottom_toTopOf="@id/decorCheckboxLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <TextView
@@ -130,7 +129,6 @@
         android:id="@+id/inputDecorLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/decorTypeLayout"
         app:layout_constraintStart_toStartOf="parent"
@@ -147,6 +145,30 @@
             android:background="#fff8de"
             android:imeOptions="actionDone"/>
     </com.google.android.material.textfield.TextInputLayout>
+    <!-- Checkboxes for decoration -->
+    <LinearLayout
+        android:id="@+id/decorCheckboxLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/buttonLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <CheckBox
+            android:id="@+id/checkPhotobooth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Фотобудка"
+            android:layout_marginStart="6dp"/>
+        <CheckBox
+            android:id="@+id/checkPhotozone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Фотобудка"
+            android:layout_marginStart="6dp"
+            />
+    </LinearLayout>
     <!-- Back Button -->
     <LinearLayout
         android:id="@+id/buttonLayout"

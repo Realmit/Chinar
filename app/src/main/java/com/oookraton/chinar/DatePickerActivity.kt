@@ -27,6 +27,7 @@ import android.widget.Spinner
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import android.widget.AdapterView
+import android.widget.CheckBox
 import android.widget.LinearLayout
 
 class DatePickerActivity : AppCompatActivity() {
@@ -40,6 +41,9 @@ class DatePickerActivity : AppCompatActivity() {
     private lateinit var spinnerDecorType: Spinner
     private lateinit var editOtherDecor: TextInputEditText
     private lateinit var inputDecorLayout: TextInputLayout
+    private lateinit var decorCheckboxLayout: LinearLayout
+    private lateinit var checkPhotobooth: CheckBox
+    private lateinit var checkPhotozone: CheckBox
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_datepicker)
@@ -58,6 +62,9 @@ class DatePickerActivity : AppCompatActivity() {
         inputDecorLayout = findViewById(R.id.inputDecorLayout)
         editOtherDecor = findViewById(R.id.editOtherDecor)
         decorTypeLayout = findViewById(R.id.decorTypeLayout)
+        decorCheckboxLayout = findViewById(R.id.decorCheckboxLayout)
+        checkPhotobooth = findViewById(R.id.checkPhotobooth)
+        checkPhotozone = findViewById(R.id.checkPhotozone)
         // Setup event dropdown
         val eventTypes = arrayOf("Поминальные", "Свадьба", "День рождения", "Иное")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, eventTypes).apply {
@@ -194,6 +201,7 @@ class DatePickerActivity : AppCompatActivity() {
                 peopleInputLayout.visibility = View.VISIBLE
                 eventTypeLayout.visibility = View.VISIBLE
                 decorTypeLayout.visibility = View.VISIBLE
+                decorCheckboxLayout.visibility = View.VISIBLE
             } else {
                 toast?.cancel()
                 toast = null
@@ -202,6 +210,7 @@ class DatePickerActivity : AppCompatActivity() {
                 peopleInputLayout.visibility = View.GONE
                 eventTypeLayout.visibility = View.GONE
                 decorTypeLayout.visibility = View.GONE
+                decorCheckboxLayout.visibility = View.GONE
             }
         }
         editNumberOfPeople.addTextChangedListener(object : TextWatcher {
@@ -233,6 +242,23 @@ class DatePickerActivity : AppCompatActivity() {
                 toast = Toast.makeText(this, "Выбрано: $day.$month.$year", Toast.LENGTH_SHORT)
                 toast?.show()
             }
+            val selectedOptions = mutableListOf<String>()
+            if (checkPhotobooth.isChecked) {
+                selectedOptions.add("Фотобудка")
+            }
+            if (checkPhotozone.isChecked) {
+                selectedOptions.add("Фотозона")
+            }
+            if (selectedOptions.isEmpty()) {
+                toast = Toast.makeText(this, "Опции: нет", Toast.LENGTH_SHORT)
+                toast?.show()
+            } else {
+                toast = Toast.makeText(this, "Опции: ${selectedOptions.joinToString(", ")}", Toast.LENGTH_SHORT)
+                toast?.show()
+            }
+            // Pass to next screen or save
+            val optionsArray = selectedOptions.toTypedArray()
+            // intent.putExtra("selected_options", optionsArray)
         }
 
     }
@@ -257,4 +283,5 @@ class DatePickerActivity : AppCompatActivity() {
         params.bottomMargin = px.toInt()
         view.layoutParams = params
     }
+
 }
