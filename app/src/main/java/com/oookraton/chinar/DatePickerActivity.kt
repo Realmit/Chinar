@@ -1,5 +1,6 @@
 package com.oookraton.chinar
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -15,10 +16,12 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import java.util.*
+import android.view.KeyEvent
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.google.android.material.textfield.TextInputEditText
@@ -33,6 +36,10 @@ class DatePickerActivity : AppCompatActivity() {
     private lateinit var spinnerEventType: Spinner
     private lateinit var inputOtherLayout: TextInputLayout
     private lateinit var editOtherEvent: TextInputEditText
+    private lateinit var decorTypeLayout: LinearLayout
+    private lateinit var spinnerDecorType: Spinner
+    private lateinit var editOtherDecor: TextInputEditText
+    private lateinit var inputDecorLayout: TextInputLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_datepicker)
@@ -40,19 +47,31 @@ class DatePickerActivity : AppCompatActivity() {
         val buttonBack = findViewById<Button>(R.id.buttonBack)
         val buttonNext = findViewById<Button>(R.id.buttonNext)
         val editNumberOfPeople = findViewById<EditText>(R.id.editNumberOfPeople)
+        // Event
         spinnerEventType = findViewById(R.id.spinnerEventType)
         inputOtherLayout = findViewById(R.id.inputOtherLayout)
         editOtherEvent = findViewById(R.id.editOtherEvent)
         eventTypeLayout = findViewById(R.id.eventTypeLayout)
         peopleInputLayout = findViewById(R.id.peopleInputLayout)
-        // Setup dropdown
+        // Decor
+        spinnerDecorType = findViewById(R.id.spinnerDecorType)
+        inputDecorLayout = findViewById(R.id.inputDecorLayout)
+        editOtherDecor = findViewById(R.id.editOtherDecor)
+        decorTypeLayout = findViewById(R.id.decorTypeLayout)
+        // Setup event dropdown
         val eventTypes = arrayOf("Поминальные", "Свадьба", "День рождения", "Иное")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, eventTypes).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
         spinnerEventType.adapter = adapter
 
-        // Handle selection
+        // Setup decor dropdown
+        val decorTypes = arrayOf("Синие хлопковые", "Красные льняные", "Черные полиэстровые", "Иное")
+        val adapterDecor = ArrayAdapter(this, android.R.layout.simple_spinner_item, decorTypes).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+        spinnerDecorType.adapter = adapterDecor
+        // Handle event selection
         spinnerEventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position == 3) { // "Иное"
@@ -64,16 +83,45 @@ class DatePickerActivity : AppCompatActivity() {
                     setMarginBottom(eventTypeLayout, 10f)
                 }
             }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 inputOtherLayout.visibility = View.GONE
                 editOtherEvent.setText("")
                 setMarginBottom(eventTypeLayout, 10f)
             }
         }
-
-        // Limit input to 20 chars (reinforce maxLength)
+        // Limit input to 20 chars (reinforce maxLength) to other event input
         editOtherEvent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s?.length ?: 0 > 20) {
+                    s?.let {
+                        it.replace(20, it.length, "")
+                    }
+                }
+            }
+        })
+        // Handle decoration selection
+        spinnerDecorType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (position == 3) { // "Иное"
+                    inputDecorLayout.visibility = View.VISIBLE
+                    setMarginBottom(decorTypeLayout, 80f)
+                } else {
+                    inputDecorLayout.visibility = View.GONE
+                    editOtherDecor.setText("") // Clear when hidden
+                    setMarginBottom(decorTypeLayout, 10f)
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                inputOtherLayout.visibility = View.GONE
+                editOtherDecor.setText("")
+                setMarginBottom(decorTypeLayout, 10f)
+            }
+        }
+        // Limit decors input to 20 chars (reinforce maxLength) to decor input
+        editOtherDecor.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
@@ -145,6 +193,7 @@ class DatePickerActivity : AppCompatActivity() {
                 toast?.show()
                 peopleInputLayout.visibility = View.VISIBLE
                 eventTypeLayout.visibility = View.VISIBLE
+                decorTypeLayout.visibility = View.VISIBLE
             } else {
                 toast?.cancel()
                 toast = null
@@ -152,6 +201,7 @@ class DatePickerActivity : AppCompatActivity() {
                 toast?.show()
                 peopleInputLayout.visibility = View.GONE
                 eventTypeLayout.visibility = View.GONE
+                decorTypeLayout.visibility = View.GONE
             }
         }
         editNumberOfPeople.addTextChangedListener(object : TextWatcher {

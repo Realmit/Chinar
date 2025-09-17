@@ -55,7 +55,7 @@
             android:padding="8dp"
             android:textColorHint="#5a0200"/>
     </LinearLayout>
-    <!-- Event Type Dropdown -->
+    <!-- Event Type Dropdown (hidden by default, unlocks when date picked) -->
     <LinearLayout
         android:id="@+id/eventTypeLayout"
         android:layout_width="0dp"
@@ -63,7 +63,7 @@
         android:orientation="horizontal"
         android:layout_marginBottom="10dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/buttonLayout"
+        app:layout_constraintBottom_toTopOf="@id/decorTypeLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <TextView
@@ -98,7 +98,54 @@
             android:hint="Введите тип мероприятия"
             android:maxLines="1"
             android:maxLength="20"
-            android:background="#fff8de"/>
+            android:background="#fff8de"
+            android:imeOptions="actionDone"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Decor Type Dropdown (hidden by default, unlocks when date picked) -->
+    <LinearLayout
+        android:id="@+id/decorTypeLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/buttonLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Скатерти:"
+            android:textSize="20sp"
+            android:layout_marginBottom="8dp" />
+        <Spinner
+            android:id="@+id/spinnerDecorType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:textSize="20sp"/>
+    </LinearLayout>
+    <!-- "Other decoration" Input Field (hidden by default) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputDecorLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/decorTypeLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:counterEnabled="true"
+        app:counterMaxLength="20">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editOtherDecor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите цвет/тип скатертей"
+            android:maxLines="1"
+            android:maxLength="20"
+            android:background="#fff8de"
+            android:imeOptions="actionDone"/>
     </com.google.android.material.textfield.TextInputLayout>
     <!-- Back Button -->
     <LinearLayout
