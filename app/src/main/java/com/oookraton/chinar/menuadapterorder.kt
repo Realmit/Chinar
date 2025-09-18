@@ -106,7 +106,6 @@ class MenuAdapterOrder(
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(true)
         dialog.setCanceledOnTouchOutside(true)
-
         dialog.show()
     }
     fun updateItems(newItems: List<MenuItem>) {

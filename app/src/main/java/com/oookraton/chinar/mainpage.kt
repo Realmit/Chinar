@@ -1,9 +1,15 @@
 package com.oookraton.chinar
 
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Button
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import kotlin.math.abs
@@ -84,7 +90,6 @@ class Mainpage : AppCompatActivity() {
         button2gis.setOnClickListener {
             val url = "https://go.2gis.com/XfrWt"
             val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-            startActivity(intent)
             try {
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
@@ -101,24 +106,42 @@ class Mainpage : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-        val buttonwhatsapp = findViewById<Button>(R.id.buttonGoToWhatsapp)
-        buttonwhatsapp.setOnClickListener {
-            val url = "https://api.whatsapp.com/send?phone=79132180307"
-            val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-            startActivity(intent)
-            try {
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this, "Не получилось открыть ссылку, ошибка: ${e.message}", Toast.LENGTH_LONG).show()
-            }
-        }
         val buttonorder = findViewById<Button>(R.id.buttonGoToOrder)
         buttonorder.setOnClickListener {
             val intent = Intent(this, Order_mainpage::class.java)
             startActivity(intent)
         }
+        val buttonGoToContacts = findViewById<Button>(R.id.buttonGoToContacts)
+        buttonGoToContacts.setOnClickListener {
+            showContactsDialog()
+        }
     }
+    private fun showContactsDialog() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_contacts)
+        // Close button
+        val closeButton = dialog.findViewById<Button>(R.id.buttonCloseContacts)
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        val whatsappRow = dialog.findViewById<LinearLayout>(R.id.whatsappRow)
+        whatsappRow?.setOnClickListener {
+            val url = "https://api.whatsapp.com/send?phone=79132180307"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            if (intent.resolveActivity(packageManager) != null) {
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Не удалось открыть WhatsApp", Toast.LENGTH_SHORT).show()
+            }
+        }
+        // Set width and position
+        val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+        dialog.window?.setLayout(width, LinearLayout.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setGravity(Gravity.CENTER)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCancelable(false)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
 
+    }
 }

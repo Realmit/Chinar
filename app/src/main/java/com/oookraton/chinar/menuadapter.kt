@@ -67,7 +67,6 @@ class MenuAdapter(private val context: Context, private var items: MutableList<M
         val width = (context.resources.displayMetrics.widthPixels * 0.90).toInt()
         dialog.setContentView(R.layout.dialog_menu_details)
         dialog.window?.setLayout(width, LinearLayout.LayoutParams.WRAP_CONTENT)
-        dialog.window?.setLayout(width, LinearLayout.LayoutParams.WRAP_CONTENT)
         dialog.window?.setGravity(Gravity.CENTER)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false) // Prevent dismiss by tapping outside

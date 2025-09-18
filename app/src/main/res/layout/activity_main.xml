@@ -28,22 +28,35 @@
         android:textStyle="bold" />
     <Button
         android:id="@+id/buttonGoToMenu"
-        android:layout_width="226dp"
+        android:layout_width="242dp"
         android:layout_height="114dp"
         android:text="@string/menu"
         app:cornerRadius = "20dp" />
     <Button
         android:id="@+id/buttonGoToOrder"
-        android:layout_width="226dp"
+        android:layout_width="242dp"
         android:layout_height="114dp"
         android:text="@string/order"
         app:cornerRadius = "20dp"/>
-    <Button
-        android:id="@+id/buttonGoToCafe"
-        android:layout_width="226dp"
-        android:layout_height="114dp"
-        android:text="@string/about_cafe"
-        app:cornerRadius = "20dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <Button
+            android:id="@+id/buttonGoToCafe"
+            android:layout_width="118dp"
+            android:layout_height="114dp"
+            android:text="@string/about_cafe"
+            app:cornerRadius = "20dp"
+            android:layout_marginEnd="6dp"/>
+        <Button
+            android:id="@+id/buttonGoToContacts"
+            android:layout_width="118dp"
+            android:layout_height="114dp"
+            android:text="КОНТАКТЫ"
+            app:cornerRadius = "20dp" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,8 +64,8 @@
         android:gravity="center">
         <Button
             android:id="@+id/buttonGoToReviews2gis"
-            android:layout_width="100dp"
-            android:layout_height="114dp"
+            android:layout_width="118dp"
+            android:layout_height="118dp"
             android:layout_marginEnd="6dp"
             android:drawableTop="@drawable/twogis"
             android:drawablePadding="14dp"
@@ -62,26 +75,13 @@
             tools:ignore="ButtonStyle"
             android:textSize="13sp"/>
         <Button
-            android:id="@+id/buttonGoToWhatsapp"
-            android:layout_width="100dp"
-            android:layout_height="114dp"
-            android:layout_marginEnd="6dp"
-            android:drawableTop="@drawable/whatsapp"
-            android:drawablePadding="14dp"
-            android:paddingTop="14dp"
-            android:text="@string/whatsapp"
-            app:cornerRadius="20dp"
-            tools:ignore="ButtonStyle"
-            android:textSize="11sp"/>
-        <Button
             android:id="@+id/buttonGoToReviewsYandex"
-            android:layout_width="100dp"
-            android:layout_height="114dp"
+            android:layout_width="118dp"
+            android:layout_height="118dp"
             android:text="@string/yandex"
             android:paddingTop="14dp"
             android:drawableTop="@drawable/yamaps"
             android:drawablePadding="14dp"
-            android:layout_marginEnd="6dp"
             app:cornerRadius ="20dp"
             tools:ignore="ButtonStyle"
             android:textSize="13sp"/>
