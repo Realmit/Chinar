@@ -90,21 +90,13 @@ class Mainpage : AppCompatActivity() {
         button2gis.setOnClickListener {
             val url = "https://go.2gis.com/XfrWt"
             val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-            try {
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
-                }
-            } catch (e: Exception) {
-                Toast.makeText(this, "Не получилось открыть ссылку, ошибка: ${e.message}", Toast.LENGTH_LONG).show()
-            }
+            startActivity(intent)
         }
         val buttonyamaps = findViewById<Button>(R.id.buttonGoToReviewsYandex)
         buttonyamaps.setOnClickListener {
             val url = "https://yandex.ru/maps/-/CLUK44IT"
             val intent = Intent(Intent.ACTION_VIEW, url.toUri())
-            if (intent.resolveActivity(packageManager) != null) {
-                startActivity(intent)
-            }
+            startActivity(intent)
         }
         val buttonorder = findViewById<Button>(R.id.buttonGoToOrder)
         buttonorder.setOnClickListener {
@@ -117,31 +109,48 @@ class Mainpage : AppCompatActivity() {
         }
     }
     private fun showContactsDialog() {
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.dialog_contacts)
-        // Close button
-        val closeButton = dialog.findViewById<Button>(R.id.buttonCloseContacts)
-        closeButton.setOnClickListener {
-            dialog.dismiss()
-        }
-        val whatsappRow = dialog.findViewById<LinearLayout>(R.id.whatsappRow)
-        whatsappRow?.setOnClickListener {
-            val url = "https://api.whatsapp.com/send?phone=79132180307"
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            if (intent.resolveActivity(packageManager) != null) {
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Не удалось открыть WhatsApp", Toast.LENGTH_SHORT).show()
+        try {
+            val dialog = Dialog(this)
+            dialog.setContentView(R.layout.dialog_contacts)
+            // Close button
+            val closeButton = dialog.findViewById<Button>(R.id.buttonCloseContacts)
+            closeButton?.setOnClickListener {
+                dialog.dismiss()
             }
-        }
-        // Set width and position
-        val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
-        dialog.window?.setLayout(width, LinearLayout.LayoutParams.WRAP_CONTENT)
-        dialog.window?.setGravity(Gravity.CENTER)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCancelable(false)
-        dialog.setCanceledOnTouchOutside(false)
-        dialog.show()
+            // WhatsApp click handler
+            val whatsappRow = dialog.findViewById<LinearLayout>(R.id.whatsappRow)
+            whatsappRow?.setOnClickListener {
+                val url = "https://api.whatsapp.com/send?phone=79132180307"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }
+            // 2gis click handler
+            val twogisRow = dialog.findViewById<LinearLayout>(R.id.twogisRow)
+            twogisRow?.setOnClickListener {
+                val url = "https://go.2gis.com/XfrWt"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }
+            // YaMaps click handler
+            val yamapsRow = dialog.findViewById<LinearLayout>(R.id.yamapsRow)
+            yamapsRow?.setOnClickListener {
+                val url = "https://yandex.ru/maps/-/CLUK44IT"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }
+            // Set dialog properties
+            dialog.window?.let { window ->
+                val width = (resources.displayMetrics.widthPixels * 0.90).toInt()
+                window.setLayout(width, LinearLayout.LayoutParams.WRAP_CONTENT)
+                window.setGravity(Gravity.CENTER)
+                window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
+            dialog.setCancelable(true)
+            dialog.setCanceledOnTouchOutside(true)
+            dialog.show()
 
+        } catch (e: Exception) {
+            Toast.makeText(this, "Ошибка при создании диалога:\n${e.message}", Toast.LENGTH_LONG).show()
+        }
     }
 }

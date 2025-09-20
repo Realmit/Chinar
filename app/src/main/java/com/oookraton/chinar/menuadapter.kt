@@ -63,7 +63,6 @@ class MenuAdapter(private val context: Context, private var items: MutableList<M
     // Function to show custom dialog
     private fun showItemDetails(item: MenuItem) {
         val dialog = Dialog(context)
-
         val width = (context.resources.displayMetrics.widthPixels * 0.90).toInt()
         dialog.setContentView(R.layout.dialog_menu_details)
         dialog.window?.setLayout(width, LinearLayout.LayoutParams.WRAP_CONTENT)

@@ -24,28 +24,14 @@
             android:text="Наши контакты"
             android:textSize="22sp"
             android:textStyle="bold" />
-
-        <!-- Logo -->
-        <ImageView
-            android:id="@+id/contactIcon"
-            android:layout_width="250dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/chinar"
-            android:contentDescription="Логотип кафе" />
-
         <!-- Contacts List -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <!-- Phone -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -58,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="+7 (913) 218-03-07"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"/>
                 </LinearLayout>
 
                 <!-- WhatsApp -->
@@ -69,57 +55,61 @@
                     android:layout_marginVertical="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
-                        android:src="@drawable/whatsapp" />
+                        android:src="@drawable/whatsapp"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="WhatsApp"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/blue"/>
                 </LinearLayout>
-
                 <!-- 2GIS -->
                 <LinearLayout
+                    android:id="@+id/twogisRow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
-                        android:src="@drawable/twogis" />
+                        android:src="@drawable/twogis"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="2GIS"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/blue"/>
                 </LinearLayout>
 
                 <!-- Yandex Maps -->
                 <LinearLayout
+                    android:id="@+id/yamapsRow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
-                        android:src="@drawable/yamaps" />
+                        android:src="@drawable/yamaps"/>
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Яндекс Карты"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/blue"/>
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>

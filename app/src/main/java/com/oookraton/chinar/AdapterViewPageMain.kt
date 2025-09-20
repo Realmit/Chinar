@@ -33,4 +33,5 @@ class AdapterViewPageMain(private val context: Context, private val images: IntA
     }
 
     override fun getItemCount(): Int = images.size
+
 }
