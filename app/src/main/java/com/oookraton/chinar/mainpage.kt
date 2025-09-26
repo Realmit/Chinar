@@ -100,7 +100,7 @@ class Mainpage : AppCompatActivity() {
         }
         val buttonorder = findViewById<Button>(R.id.buttonGoToOrder)
         buttonorder.setOnClickListener {
-            val intent = Intent(this, Order_mainpage::class.java)
+            val intent = Intent(this, DatePickerActivity::class.java)
             startActivity(intent)
         }
         val buttonGoToContacts = findViewById<Button>(R.id.buttonGoToContacts)

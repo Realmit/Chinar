@@ -19,7 +19,6 @@ class Order_mainpage : AppCompatActivity() {
     private lateinit var adapter: MenuAdapterOrder
     private lateinit var textCartTotal: TextView
     private lateinit var categoryContainer: LinearLayout
-    private val menuItems = MenuData.menuItems
     private var currentCategory = "Всё"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +38,7 @@ class Order_mainpage : AppCompatActivity() {
         }
         val forwardButton = findViewById<Button>(R.id.buttonNext)
         forwardButton.setOnClickListener {
-            val intent = Intent(this, DatePickerActivity::class.java)
-            startActivity(intent)
-            finish()
+            // Forward to next menu WIP
         }
     }
     private fun setupCategories() {

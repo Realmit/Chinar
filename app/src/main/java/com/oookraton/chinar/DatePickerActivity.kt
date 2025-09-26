@@ -259,6 +259,9 @@ class DatePickerActivity : AppCompatActivity() {
             // Pass to next screen or save
             val optionsArray = selectedOptions.toTypedArray()
             // intent.putExtra("selected_options", optionsArray)
+            val intent = Intent(this, Order_mainpage::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }
