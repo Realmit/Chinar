@@ -1,4 +1,3 @@
-// File: AdapterViewPageMain.kt
 package com.oookraton.chinar
 
 import android.content.Context

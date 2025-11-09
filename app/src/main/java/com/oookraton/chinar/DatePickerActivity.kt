@@ -16,12 +16,10 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import java.util.*
-import android.view.KeyEvent
 import android.text.TextWatcher
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import com.google.android.material.textfield.TextInputEditText
@@ -29,6 +27,7 @@ import com.google.android.material.textfield.TextInputLayout
 import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import java.time.LocalDate
 
 class DatePickerActivity : AppCompatActivity() {
     private var toast: Toast? = null
@@ -141,8 +140,8 @@ class DatePickerActivity : AppCompatActivity() {
             }
         })
         // Set min and max dates
-        val minCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2024, 1, 1)
-        val maxCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(2025, 12, 31)
+        val minCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(LocalDate.now().year, LocalDate.now().monthValue, LocalDate.now().dayOfMonth)
+        val maxCalendar: org.threeten.bp.LocalDate = org.threeten.bp.LocalDate.of(LocalDate.now().year+1, LocalDate.now().monthValue, LocalDate.now().dayOfMonth)
         val minDate = CalendarDay.from(minCalendar)
         val maxDate = CalendarDay.from(maxCalendar)
 
@@ -227,7 +226,7 @@ class DatePickerActivity : AppCompatActivity() {
             }
         })
         buttonBack.setOnClickListener {
-            val intent = Intent(this, Order_mainpage::class.java)
+            val intent = Intent(this, Mainpage::class.java)
             startActivity(intent)
             finish()
         }
