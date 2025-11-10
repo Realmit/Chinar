@@ -28,7 +28,11 @@ import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import java.time.LocalDate
-
+data class DateItem(
+    val year: Int,
+    val month: Int,
+    val day: Int
+)
 class DatePickerActivity : AppCompatActivity() {
     private var toast: Toast? = null
     private lateinit var eventTypeLayout: LinearLayout
@@ -167,10 +171,10 @@ class DatePickerActivity : AppCompatActivity() {
             }
         })
 
-        // Disable specific dates (e.g., holidays)
-        val disabledDates = mutableSetOf<CalendarDay>()
-        disabledDates.add(CalendarDay.from(2025, 12, 31))  // New Year
-        disabledDates.add(CalendarDay.from(2025, 2, 23)) // Defender of Fatherland Day
+        // Disable specific dates
+        val disabledDates = DateData.availableDates
+            .map { CalendarDay.from(it.year, it.month, it.day) }
+            .toMutableSet()
 
         calendarView.addDecorator(object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay) = day in disabledDates
