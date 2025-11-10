@@ -14,6 +14,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 data class MenuItem(
+    val id: Int,
     val title: String,
     val description: String,
     val price: String,

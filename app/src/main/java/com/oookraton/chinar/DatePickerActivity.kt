@@ -153,7 +153,6 @@ class DatePickerActivity : AppCompatActivity() {
             .setMinimumDate(minDate)
             .setMaximumDate(maxDate)
             .commit()
-
         // Disable weekends (sun)
         calendarView.addDecorator(object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay): Boolean {
@@ -170,9 +169,10 @@ class DatePickerActivity : AppCompatActivity() {
                 view.addSpan(ForegroundColorSpan(Color.GRAY))
             }
         })
-
-        // Disable specific dates
-        val disabledDates = DateData.availableDates
+        // Load reserved dates
+        syncReservedDatesFromOrders()
+        // Disable specific dates and reserved dates
+        val disabledDates = (DateData.unavailableDates + DateData.reservedDates)
             .map { CalendarDay.from(it.year, it.month, it.day) }
             .toMutableSet()
 
@@ -289,5 +289,9 @@ class DatePickerActivity : AppCompatActivity() {
         params.bottomMargin = px.toInt()
         view.layoutParams = params
     }
-
+    private fun syncReservedDatesFromOrders() {
+        val currentDates = DateData.reservedDates.toSet()
+        val newDates = OrderData.orders.map { it.date }.filter { it !in currentDates }
+        DateData.reservedDates.addAll(newDates)
+    }
 }

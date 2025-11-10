@@ -11,7 +11,17 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
-
+data class OrderItem(
+    val date: DateItem,
+    val peopleAmount: Int,
+    val eventType: String,
+    val clothColor: String,
+    val photobooth: Boolean,
+    val baloons: Boolean,
+    val photozone: Boolean,
+    val option4: Boolean,
+    val foods: List<Pair<Int, Int>>
+)
 class Order_mainpage : AppCompatActivity() {
     private val cart = mutableMapOf<MenuItem, Int>()
     private val categories = listOf("Всё", "Горячее", "Салаты", "Супы", "Напитки", "Мороженное", "Эчпочмаки")
