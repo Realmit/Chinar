@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 
 class Cafe_mainpage : AppCompatActivity() {
     private var decorPopup: View? = null
+    private var cafeInfoPopup: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,10 @@ class Cafe_mainpage : AppCompatActivity() {
         val buttonAboutDecoration = findViewById<Button>(R.id.buttonAboutDecoration)
         buttonAboutDecoration.setOnClickListener {
             showDecorationPopup()
+        }
+        val buttonAboutUs = findViewById<Button>(R.id.buttonAboutUs)
+        buttonAboutUs.setOnClickListener {
+            showCafeInfoPopup()
         }
     }
 
@@ -70,7 +75,7 @@ class Cafe_mainpage : AppCompatActivity() {
 
             // Fade in animation (2 seconds)
             ObjectAnimator.ofFloat(this, "alpha", 0f, 1f).apply {
-                duration = 2000
+                duration = 500
                 interpolator = DecelerateInterpolator()
                 start()
             }
@@ -81,7 +86,68 @@ class Cafe_mainpage : AppCompatActivity() {
         decorPopup?.apply {
             // Fade out animation (1 second)
             ObjectAnimator.ofFloat(this, "alpha", 1f, 0f).apply {
-                duration = 1000
+                duration = 500
+                interpolator = DecelerateInterpolator()
+                addListener(object: android.animation.AnimatorListenerAdapter() {
+                    override fun onAnimationStart(animation: android.animation.Animator) {}
+                    override fun onAnimationEnd(animation: android.animation.Animator) {
+                        isVisible = false
+                    }
+                    override fun onAnimationCancel(animation: android.animation.Animator) {
+                        isVisible = false
+                    }
+                    override fun onAnimationRepeat(animation: android.animation.Animator) {}
+                })
+                start()
+            }
+        }
+    }
+    private fun showCafeInfoPopup() {
+        // Create popup if not already created
+        if (cafeInfoPopup == null) {
+            val popupView = layoutInflater.inflate(R.layout.popup_aboutus, null)
+
+            // Set up close button
+            popupView.findViewById<Button>(R.id.buttonClosePopup).setOnClickListener {
+                hideCafeInfoPopup()
+            }
+
+            // Add to root layout
+            val rootLayout = findViewById<ViewGroup>(android.R.id.content)
+            rootLayout.addView(popupView)
+
+            // Set initial state (invisible)
+            popupView.alpha = 0f
+            popupView.isVisible = true
+
+            // Position in center
+            val params = popupView.layoutParams as ViewGroup.MarginLayoutParams
+            params.topMargin = (resources.displayMetrics.heightPixels * 0.1).toInt()
+            params.bottomMargin = (resources.displayMetrics.heightPixels * 0.1).toInt()
+            popupView.layoutParams = params
+
+            cafeInfoPopup = popupView
+        }
+
+        // Show with fade-in animation
+        cafeInfoPopup?.apply {
+            alpha = 0f
+            isVisible = true
+
+            // Fade in animation (500ms)
+            ObjectAnimator.ofFloat(this, "alpha", 0f, 1f).apply {
+                duration = 500
+                interpolator = DecelerateInterpolator()
+                start()
+            }
+        }
+    }
+
+    private fun hideCafeInfoPopup() {
+        cafeInfoPopup?.apply {
+            // Fade out animation (500ms)
+            ObjectAnimator.ofFloat(this, "alpha", 1f, 0f).apply {
+                duration = 500
                 interpolator = DecelerateInterpolator()
                 addListener(object: android.animation.AnimatorListenerAdapter() {
                     override fun onAnimationStart(animation: android.animation.Animator) {}
