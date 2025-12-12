@@ -42,6 +42,9 @@
         <activity
             android:name=".DatePickerActivity"
             android:exported="false" />
+        <activity
+            android:name=".OrderFinal"
+            android:exported="false" />
     </application>
 
 </manifest>

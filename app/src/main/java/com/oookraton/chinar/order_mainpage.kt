@@ -29,6 +29,7 @@ class Order_mainpage : AppCompatActivity() {
     private lateinit var adapter: MenuAdapterOrder
     private lateinit var textCartTotal: TextView
     private lateinit var categoryContainer: LinearLayout
+
     private var currentCategory = "Всё"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,16 +40,71 @@ class Order_mainpage : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = MenuAdapterOrder(this, filterItemsByCategory().toMutableList(), cart) {updateCartTotal() }
         recyclerView.adapter = adapter
+        // Get booking data
+        val textBookingSummary = findViewById<TextView>(R.id.textBookingSummary)
+        val bookingData = intent.getStringExtra("booking_data") ?: ""
+
+        if (bookingData.isNotEmpty()) {
+            val parts = bookingData.split(",")
+            if (parts.size >= 7) {
+                val year = parts[0]
+                val month = parts[1]
+                val day = parts[2]
+                val numberOfPeople = parts[3]
+                val eventType = parts[4]
+                val decorType = parts[5]
+                val checkboxList = parts.getOrNull(6) ?: ""
+
+                // 1. Create booking summary
+                val bookingSummary = "Бронирование:\n" +
+                        "Дата: $day.$month.$year\n" +
+                        "Количество человек: $numberOfPeople\n" +
+                        "Мероприятие: $eventType\n" +
+                        "Скатерти: $decorType" +
+                        (if (checkboxList.isNotEmpty()) "\nДополнительно: ${checkboxList.replace(";", ", ")}" else "")
+
+                // 2. Create cart items summary
+                val cartItemsSummary = if (cart.isNotEmpty()) {
+                    val items = cart.entries.joinToString("\n") { (item, quantity) ->
+                        "• ${item.title}: $quantity шт. (${formatPrice(parsePrice(item.price) * quantity)}₽)"
+                    }
+                    "\n\nВаш заказ:\n$items"
+                } else {
+                    "\n\nВаш заказ:\n(корзина пуста)"
+                }
+
+                // 3. Calculate and format total
+                val itemCount = cart.values.sum()
+                val totalPrice = cart.entries.sumOf { (item, quantity) ->
+                    parsePrice(item.price) * quantity
+                }
+                val formattedTotalPrice = formatPrice(totalPrice)
+                val suffix = getSuffix(itemCount)
+
+                // 4. Combine everything into one superb string
+                val fullSummary = "$bookingSummary$cartItemsSummary\n\nИтого: $itemCount позиц$suffix • $formattedTotalPrice₽"
+
+                textBookingSummary.text = bookingSummary
+            }
+        }
+
         setupCategories()
+        updateCartTotal() // Make sure total is updated on creation
+
+        setupCategories()
+
         val backButton = findViewById<Button>(R.id.buttonBack)
         backButton.setOnClickListener {
-            val intent = Intent(this, Mainpage::class.java)
-            startActivity(intent)
             finish()
         }
         val forwardButton = findViewById<Button>(R.id.buttonNext)
         forwardButton.setOnClickListener {
-            // Forward to next menu WIP
+            // Create a detailed order string for next screen
+            val orderDetails = createOrderDetailsString(bookingData)
+
+            val intent = Intent(this, OrderFinal::class.java)
+            intent.putExtra("order_details", orderDetails)
+            startActivity(intent)
         }
     }
     private fun setupCategories() {
@@ -117,5 +173,33 @@ class Order_mainpage : AppCompatActivity() {
     }
     private fun formatPrice(value: Double): String {
         return if (value % 1 == 0.0) value.toInt().toString() else String.format("%.2f", value)
+    }
+    private fun createOrderDetailsString(bookingData: String): String {
+        val parts = bookingData.split(",")
+        val orderDetails = StringBuilder()
+
+        // Add booking data
+        if (parts.size >= 7) {
+            val year = parts[0]
+            val month = parts[1]
+            val day = parts[2]
+            val numberOfPeople = parts[3]
+            val eventType = parts[4]
+            val decorType = parts[5]
+            val checkboxList = parts.getOrNull(6) ?: ""
+
+            orderDetails.append("BOOKING|$year|$month|$day|$numberOfPeople|$eventType|$decorType|$checkboxList\n")
+        }
+
+        // Add cart items
+        cart.entries.forEach { (item, quantity) ->
+            orderDetails.append("ITEM|${item.title}|$quantity|${item.price}\n")
+        }
+
+        // Add total
+        val totalPrice = cart.entries.sumOf { (item, quantity) -> parsePrice(item.price) * quantity }
+        orderDetails.append("TOTAL|${cart.values.sum()}|${formatPrice(totalPrice)}")
+
+        return orderDetails.toString()
     }
 }

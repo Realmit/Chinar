@@ -7,13 +7,30 @@
     android:paddingTop="40dp"
     android:paddingBottom="10dp">
 
+    <!-- Booking Summary -->
+    <TextView
+        android:id="@+id/textBookingSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Подтверждение бронирования"
+        android:textSize="12sp"
+        android:padding="6dp"
+        android:layout_margin="8dp"
+        android:background="#F8F9FA"
+        android:textColor="#000000"
+        android:lineSpacingExtra="4dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- Категории -->
     <HorizontalScrollView
         android:id="@+id/categoryScrollView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scrollbars="none"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textBookingSummary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <LinearLayout

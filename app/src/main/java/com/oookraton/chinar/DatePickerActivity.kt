@@ -47,6 +47,8 @@ class DatePickerActivity : AppCompatActivity() {
     private lateinit var decorCheckboxLayout: LinearLayout
     private lateinit var checkPhotobooth: CheckBox
     private lateinit var checkPhotozone: CheckBox
+    private lateinit var checkBallons: CheckBox
+    private lateinit var checkMinions: CheckBox
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_datepicker)
@@ -68,6 +70,8 @@ class DatePickerActivity : AppCompatActivity() {
         decorCheckboxLayout = findViewById(R.id.decorCheckboxLayout)
         checkPhotobooth = findViewById(R.id.checkPhotobooth)
         checkPhotozone = findViewById(R.id.checkPhotozone)
+        checkBallons = findViewById(R.id.checkBallons)
+        checkMinions = findViewById(R.id.checkMinions)
         // Setup event dropdown
         val eventTypes = arrayOf("Поминальные", "Свадьба", "День рождения", "Иное")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, eventTypes).apply {
@@ -237,34 +241,67 @@ class DatePickerActivity : AppCompatActivity() {
         buttonNext.setOnClickListener {
             toast?.cancel()
             toast = null
-            if (selectedDate != null) {
-                val year = selectedDate!!.year
-                val month = selectedDate!!.month + 1
-                val day = selectedDate!!.day
-                // Pass this date to another screen or save it
-                toast = Toast.makeText(this, "Выбрано: $day.$month.$year", Toast.LENGTH_SHORT)
+            // 1. Validate selected date
+            if (selectedDate == null) {
+                toast = Toast.makeText(this, "Пожалуйста, выберите дату", Toast.LENGTH_SHORT)
                 toast?.show()
+                return@setOnClickListener
             }
+
+            // 2. Get date components
+            val year = selectedDate!!.year
+            val month = selectedDate!!.month
+            val day = selectedDate!!.day
+
+            // 3. Get number of people
+            val numberOfPeople = editNumberOfPeople.text.toString().trim()
+            if (numberOfPeople.isEmpty() || numberOfPeople.toInt() < 10 || numberOfPeople.toInt() > 100) {
+                toast = Toast.makeText(this, "Укажите корректное количество человек (10-100)", Toast.LENGTH_SHORT)
+                toast?.show()
+                return@setOnClickListener
+            }
+
+            // 4. Get event type (with special handling for "Иное")
+            val eventPosition = spinnerEventType.selectedItemPosition
+            val eventType = when {
+                eventPosition == 3 && inputOtherLayout.visibility == View.VISIBLE -> {
+                    val customEvent = editOtherEvent.text.toString().trim()
+                    if (customEvent.isEmpty()) "Иное" else customEvent
+                }
+                else -> spinnerEventType.selectedItem.toString()
+            }
+
+            // 5. Get decor type (with special handling for "Иное")
+            val decorPosition = spinnerDecorType.selectedItemPosition
+            val decorType = when {
+                decorPosition == 3 && inputDecorLayout.visibility == View.VISIBLE -> {
+                    val customDecor = editOtherDecor.text.toString().trim()
+                    if (customDecor.isEmpty()) "Иное" else customDecor
+                }
+                else -> spinnerDecorType.selectedItem.toString()
+            }
+
+            // 6. Get selected checkboxes
             val selectedOptions = mutableListOf<String>()
-            if (checkPhotobooth.isChecked) {
-                selectedOptions.add("Фотобудка")
-            }
-            if (checkPhotozone.isChecked) {
-                selectedOptions.add("Фотозона")
-            }
-            if (selectedOptions.isEmpty()) {
-                toast = Toast.makeText(this, "Опции: нет", Toast.LENGTH_SHORT)
-                toast?.show()
-            } else {
-                toast = Toast.makeText(this, "Опции: ${selectedOptions.joinToString(", ")}", Toast.LENGTH_SHORT)
-                toast?.show()
-            }
-            // Pass to next screen or save
-            val optionsArray = selectedOptions.toTypedArray()
-            // intent.putExtra("selected_options", optionsArray)
+            if (checkPhotobooth.isChecked) selectedOptions.add("Фотобудка")
+            if (checkPhotozone.isChecked) selectedOptions.add("Фотозона")
+            if (checkBallons.isChecked) selectedOptions.add("Воздушные шары")
+            if (checkMinions.isChecked) selectedOptions.add("Миньоны")
+
+            // 7. Format data in the requested format
+            val checkboxList = selectedOptions.joinToString(";")
+            val dataString = "$year,$month,$day,$numberOfPeople,$eventType,$decorType,$checkboxList"
+
+            // 8. Show confirmation toast
+            val displayString = "$day.$month.$year, $numberOfPeople чел., $eventType, $decorType" +
+                    if (selectedOptions.isNotEmpty()) ", ${selectedOptions.joinToString(", ")}" else ""
+            toast = Toast.makeText(this, "Подтверждено:\n$displayString", Toast.LENGTH_LONG)
+            toast?.show()
+
+            // 9. Pass to next activity
             val intent = Intent(this, Order_mainpage::class.java)
+            intent.putExtra("booking_data", dataString)
             startActivity(intent)
-            finish()
         }
 
     }
