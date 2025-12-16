@@ -57,4 +57,5 @@ dependencies {
     implementation("org.nanohttpd:nanohttpd:2.2.0")
     implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
     implementation("com.jakewharton.threetenabp:threetenabp:1.4.9")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 }
