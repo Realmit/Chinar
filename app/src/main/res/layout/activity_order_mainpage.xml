@@ -71,6 +71,7 @@
             android:id="@+id/editAdditionalOrderEvent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:hint="Введите доп. пожелания"
             android:maxLines="1"
             android:maxLength="60"
