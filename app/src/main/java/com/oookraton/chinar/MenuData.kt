@@ -1,4 +1,4 @@
-package com.oookraton.chinar
+package com.oookraton.chinarDebug
 object MenuData {
     val menuItems = listOf(
         MenuItem(1,"Бургер", "Говяжая котлета с листьями салата",

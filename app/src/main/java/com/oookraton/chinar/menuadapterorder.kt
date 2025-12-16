@@ -1,4 +1,4 @@
-package com.oookraton.chinar
+package com.oookraton.chinarDebug
 
 import android.app.Dialog
 import android.content.Context

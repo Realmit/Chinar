@@ -1,4 +1,4 @@
-package com.oookraton.chinar
+package com.oookraton.chinarDebug
 
 import android.animation.ObjectAnimator
 import android.content.Intent

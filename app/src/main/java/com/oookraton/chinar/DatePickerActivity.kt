@@ -1,4 +1,4 @@
-package com.oookraton.chinar
+package com.oookraton.chinarDebug
 
 import android.content.Context
 import android.content.Intent

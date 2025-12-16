@@ -1,4 +1,4 @@
-package com.oookraton.chinar
+package com.oookraton.chinarDebug
 
 object DateData {
     // Праздники, сан. дни, выходные в кафе:

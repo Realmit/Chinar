@@ -1,4 +1,4 @@
-package com.oookraton.chinar
+package com.oookraton.chinarDebug
 
 import android.content.Intent
 import android.content.res.ColorStateList

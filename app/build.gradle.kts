@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.oookraton.chinar"
+    namespace = "com.oookraton.chinarDebug"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.oookraton.chinar"
+        applicationId = "com.oookraton.chinarDebug"
         minSdk = 28
         targetSdk = 36
         versionCode = 1

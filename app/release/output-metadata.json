@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.oookraton.chinar",
+  "applicationId": "com.oookraton.chinarDebug",
   "variantName": "release",
   "elements": [
     {
