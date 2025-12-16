@@ -11,6 +11,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
+import com.google.android.material.textfield.TextInputEditText
+
 data class OrderItem(
     val date: DateItem,
     val peopleAmount: Int,
@@ -66,7 +68,7 @@ class Order_mainpage : AppCompatActivity() {
                 // 2. Create cart items summary
                 val cartItemsSummary = if (cart.isNotEmpty()) {
                     val items = cart.entries.joinToString("\n") { (item, quantity) ->
-                        "• ${item.title}: $quantity шт. (${formatPrice(parsePrice(item.price) * quantity)}₽)"
+                        "• ${item.title}: $quantity шт. (${parsePrice(item.price) * quantity}₽)"
                     }
                     "\n\nВаш заказ:\n$items"
                 } else {
@@ -78,11 +80,10 @@ class Order_mainpage : AppCompatActivity() {
                 val totalPrice = cart.entries.sumOf { (item, quantity) ->
                     parsePrice(item.price) * quantity
                 }
-                val formattedTotalPrice = formatPrice(totalPrice)
                 val suffix = getSuffix(itemCount)
 
                 // 4. Combine everything into one superb string
-                val fullSummary = "$bookingSummary$cartItemsSummary\n\nИтого: $itemCount позиц$suffix • $formattedTotalPrice₽"
+                val fullSummary = "$bookingSummary$cartItemsSummary\n\nИтого: $itemCount позиц$suffix • $totalPrice₽"
 
                 textBookingSummary.text = bookingSummary
             }
@@ -166,18 +167,15 @@ class Order_mainpage : AppCompatActivity() {
         val totalPrice = cart.entries.sumOf { (item, quantity) ->
             parsePrice(item.price) * quantity
         }
-        textCartTotal.text = "$itemCount позиц${getSuffix(itemCount)} • ${formatPrice(totalPrice)}₽"
+        textCartTotal.text = "$itemCount позиц${getSuffix(itemCount)} • ${totalPrice}₽"
     }
-    private fun parsePrice(price: String): Double {
-        return price.filter { it.isDigit() || it == '.' }.toDoubleOrNull() ?: 0.0
-    }
-    private fun formatPrice(value: Double): String {
-        return if (value % 1 == 0.0) value.toInt().toString() else String.format("%.2f", value)
+    private fun parsePrice(price: String): Int {
+        return price.filter { it.isDigit() || it == '.' }.toIntOrNull() ?: 0
     }
     private fun createOrderDetailsString(bookingData: String): String {
         val parts = bookingData.split(",")
         val orderDetails = StringBuilder()
-
+        val AdditionalInfoInput = findViewById<TextInputEditText>(R.id.editAdditionalOrderEvent)
         // Add booking data
         if (parts.size >= 7) {
             val year = parts[0]
@@ -186,20 +184,17 @@ class Order_mainpage : AppCompatActivity() {
             val numberOfPeople = parts[3]
             val eventType = parts[4]
             val decorType = parts[5]
-            val checkboxList = parts.getOrNull(6) ?: ""
-
-            orderDetails.append("BOOKING|$year|$month|$day|$numberOfPeople|$eventType|$decorType|$checkboxList\n")
+            val checkboxList = parts.getOrNull(6)
+            orderDetails.append("$year,$month,$day|$eventType|$numberOfPeople|$decorType|$checkboxList|${AdditionalInfoInput.text}|${cart.entries.size}")
         }
-
         // Add cart items
         cart.entries.forEach { (item, quantity) ->
-            orderDetails.append("ITEM|${item.title}|$quantity|${item.price}\n")
+            orderDetails.append("|${item.id}|${item.title}|$quantity|${parsePrice(item.price)}")
         }
 
         // Add total
         val totalPrice = cart.entries.sumOf { (item, quantity) -> parsePrice(item.price) * quantity }
-        orderDetails.append("TOTAL|${cart.values.sum()}|${formatPrice(totalPrice)}")
-
+        orderDetails.append("|${cart.values.sum()}|${totalPrice}")
         return orderDetails.toString()
     }
 }
