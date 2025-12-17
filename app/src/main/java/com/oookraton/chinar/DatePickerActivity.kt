@@ -295,8 +295,8 @@ class DatePickerActivity : AppCompatActivity() {
             // 8. Show confirmation toast
             val displayString = "$day.$month.$year, $numberOfPeople чел., $eventType, $decorType" +
                     if (selectedOptions.isNotEmpty()) ", ${selectedOptions.joinToString(", ")}" else ""
-            toast = Toast.makeText(this, "Подтверждено:\n$displayString", Toast.LENGTH_LONG)
-            toast?.show()
+            //toast = Toast.makeText(this, "Подтверждено:\n$displayString", Toast.LENGTH_LONG)
+            //toast?.show()
 
             // 9. Pass to next activity
             val intent = Intent(this, Order_mainpage::class.java)
