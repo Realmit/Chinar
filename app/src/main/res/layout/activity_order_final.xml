@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="40dp"
+    android:paddingBottom="16dp"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <!-- Booking Summary -->
+    <TextView
+        android:id="@+id/textBookingFinal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Подтверждение бронирования"
+        android:textSize="12sp"
+        android:padding="6dp"
+        android:layout_margin="8dp"
+        android:background="#F8F9FA"
+        android:textColor="#000000"
+        android:lineSpacingExtra="4dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Input fields -->
+    <!-- Input surname -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputSurname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textBookingFinal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editSurnameEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите фамилию заказчика"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:background="#fff8de"
+            android:imeOptions="actionDone"
+            android:imeActionLabel="Enter"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Input name -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/inputSurname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editNameEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:hint="Введите имя заказчика"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:background="#fff8de"
+            android:imeOptions="actionDone"
+            android:imeActionLabel="Enter"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Input patronymic/middle name -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputPatronymic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/inputName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPatronymicEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:hint="Введите отчество заказчика (при наличии)"
+            android:maxLines="1"
+            android:maxLength="30"
+            android:background="#fff8de"
+            android:imeOptions="actionDone"
+            android:imeActionLabel="Enter"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Input phone number -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputPhoneNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintTop_toBottomOf="@id/inputPatronymic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="16dp"
+        android:paddingStart="16dp"
+        android:singleLine="true"
+        android:paddingEnd="16dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editPhoneNumberEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Введите номер телефона"
+            android:maxLines="1"
+            android:maxLength="12"
+            android:inputType="phone"
+            android:digits="+0123456789"
+            android:background="#fff8de"
+            android:imeOptions="actionDone"
+            android:imeActionLabel="Enter"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <!-- Booking Summary Final -->
+    <TextView
+        android:id="@+id/textBookingFinalDebug"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="------"
+        android:textSize="12sp"
+        android:padding="6dp"
+        android:layout_margin="8dp"
+        android:background="#F8F9FA"
+        android:textColor="#000000"
+        android:lineSpacingExtra="4dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/inputPhoneNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <!-- Кнопка "Назад" + Подтвердить -->
+    <LinearLayout
+        android:id="@+id/backsumcategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginBottom="6dp"
+        android:gravity="center_vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <!-- Back Button -->
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Назад" />
+        <!-- Spacer to push button to right -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/buttonNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Подтвердить" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
