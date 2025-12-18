@@ -189,7 +189,7 @@ class Order_mainpage : AppCompatActivity() {
         }
         // Add cart items
         cart.entries.forEach { (item, quantity) ->
-            orderDetails.append("|${item.id}|${item.title}|$quantity|${parsePrice(item.price)}")
+            orderDetails.append("|${item.id}|${item.title}|$quantity|${quantity*parsePrice(item.price)}")
         }
 
         // Add total

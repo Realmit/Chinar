@@ -203,7 +203,7 @@ class DatePickerActivity : AppCompatActivity() {
                 selectedDate = date
                 toast?.cancel()
                 toast = null
-                toast = Toast.makeText(this, "Дата выбрана: ${date.day}.${date.month + 1}.${date.year}", Toast.LENGTH_SHORT)
+                toast = Toast.makeText(this, "Дата выбрана: ${date.day}.${date.month}.${date.year}", Toast.LENGTH_SHORT)
                 toast?.show()
                 peopleInputLayout.visibility = View.VISIBLE
                 eventTypeLayout.visibility = View.VISIBLE

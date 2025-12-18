@@ -41,7 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/menuitem_bananaballtea" />
+                        android:src="@drawable/classichall" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/menuitem_bananaballtea" />
+                        android:src="@drawable/modernhall" />
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
